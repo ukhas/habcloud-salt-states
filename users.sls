@@ -24,6 +24,10 @@ user-{{ user }}:
             - user: {{ user }}
 {% endfor %}
 
+root:
+    user.present:
+        - password: !
+
 passwordless_sudo:
     file.sed:
         - name: /etc/sudoers
