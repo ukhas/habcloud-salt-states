@@ -7,8 +7,10 @@ user-{{ user }}:
         - shell: /bin/bash
         - uid: {{ data.uid }}
         - gid_from_name: True
+        {% if data.sudo %}
         - groups:
             - sudo
+        {% endif %}
         - require:
             - group: {{ user }}
             - file: passwordless_sudo
