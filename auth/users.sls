@@ -1,8 +1,11 @@
 {% for user, data in pillar["users"].items() %}
 user-{{ user }}:
     group.present:
+        - name: {{ user }}
+        - gid: {{ data.uid }}
         - system: False
     user.present:
+        - name: {{ user }}
         - password: !
         - home: /home/{{ user }}
         - shell: /bin/bash
