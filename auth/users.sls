@@ -18,12 +18,12 @@ user-{{ user }}:
         {% endif %}
         - require:
             - group: {{ user }}
-    ssh_auth.present:
+    file.managed:
+        - name: /home/{{ user }}/.ssh/authorized_keys
+        - mode: 640
         - user: {{ user }}
-        - names:
-        {% for ssh_key in data.ssh_keys %}
-            - {{ ssh_key }}
-        {% endfor %}
+        - group: {{ user }}
+        - contents_pillar: users:{{ user }}:ssh_keys
         - require:
             - user: {{ user }}
 {% endfor %}
