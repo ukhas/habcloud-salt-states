@@ -7,4 +7,6 @@ packages:
             - iotop
             - iftop
             - sysstat
-            - ntp
+
+# Deferred until the security vulnerabilities go away
+#           - nfs

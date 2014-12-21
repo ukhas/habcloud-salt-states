@@ -1,8 +1,8 @@
 base:
     '*':
-        - ssh
-        - users
+        - auth.ssh
+        - auth.users
         - reqs
 
-    'postgres*':
-        - postgres
+#    'postgres*':
+#        - postgres
