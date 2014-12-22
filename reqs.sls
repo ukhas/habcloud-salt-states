@@ -8,6 +8,7 @@ packages:
           - iftop
           - sysstat
 
+# Unnecessary daemons listening on 0.0.0.0
+purge-useless-nfs:
     pkg.purged:
-      - names:
-          - nfs-common
+      - name: nfs-common
