@@ -3,7 +3,6 @@ base:
       - auth.ssh
       - auth.users
       - reqs
-      - exim.satellite
 
     'ceto.habhub.org,phorcys.habhub.org':
       - match: list
@@ -11,6 +10,10 @@ base:
 
     support.habhub.org:
       - exim.relay
+
+    'not support.habhub.org':
+      - match: compound
+      - exim.satellite
 
 #    'postgres*':
 #        - postgres
