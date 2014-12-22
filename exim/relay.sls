@@ -1,4 +1,5 @@
-include: exim.common
+include:
+  - .common
 
 /etc/exim4/exim4.conf:
     file.managed:
