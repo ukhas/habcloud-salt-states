@@ -41,7 +41,9 @@ group-users:
 
 group-sudo:
     group.present:
-      - name: sudo
+      - names:
+         - sudo
+         - adm
       - system: true
       - members:
         {% for user, data in pillar["users"].items() %}
