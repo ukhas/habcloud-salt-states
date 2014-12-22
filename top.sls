@@ -9,7 +9,7 @@ base:
       - match: list
       - ntp
 
-    support:
+    support.habhub.org:
       - exim.relay
 
 #    'postgres*':
