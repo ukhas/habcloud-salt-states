@@ -8,5 +8,8 @@ base:
         - match: list
         - ntp
 
+    support:
+      - exim.relay
+
 #    'postgres*':
 #        - postgres

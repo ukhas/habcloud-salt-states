@@ -1,0 +1,10 @@
+root:
+    {%- for user, data in pillar["users"].items() -%}
+    {%- if data.sudo -%}
+    {#- #} {{ user -}}
+    {%- endif -%}
+    {%- endfor %}
+
+{% for user, data in pillar["users"].items() -%}
+{{- user }}: {{ data.email }}
+{% endfor %}
