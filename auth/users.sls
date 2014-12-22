@@ -25,6 +25,7 @@ user-{{ user }}:
         - group: {{ user }}
         - contents_pillar: users:{{ user }}:ssh_keys
         - makedirs: true
+        - dir_mode: 750
         - require:
             - user: {{ user }}
 {% endfor %}
