@@ -1,5 +1,6 @@
 include:
   - .common
+  - .aliases-helper
 
 /etc/exim4/exim4.conf:
     file.managed:
@@ -19,14 +20,6 @@ exim4-dkim:
       - creates: /etc/exim4/dkim.key
       - require:
           - pkg: exim4-daemon-light
-
-/etc/aliases:
-    file.managed:
-      - source: salt://exim/aliases
-      - template: jinja
-      - mode: 644
-      - user: root
-      - group: root
 
 extend:
     exim4:
