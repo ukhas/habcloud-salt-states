@@ -11,11 +11,9 @@ user-{{ user }}:
         - shell: /bin/bash
         - uid: {{ data.uid }}
         - gid_from_name: True
+        - fullname: {{ data.fullname }}
         - groups:
             - users
-        {% if data.sudo %}
-            - sudo
-        {% endif %}
         - require:
             - group: {{ user }}
     file.managed:
@@ -29,6 +27,29 @@ user-{{ user }}:
         - require:
             - user: {{ user }}
 {% endfor %}
+
+# By specifying these groups explicitly, deletion of users from
+# pillar will result in ssh and sudo being disabled, and it will
+# remove unrecognised users from sudo/users.
+group-users:
+    group.present:
+      - name: users
+      - system: true
+      - members:
+        {% for user in pillar["users"] %}
+          - {{ user }}
+        {% endfor %}
+
+group-sudo:
+    group.present:
+      - name: sudo
+      - system: true
+      - members:
+        {% for user, data in pillar["users"].items() %}
+        {% if data.sudo %}
+          - {{ user }}
+        {% endif %}
+        {% endfor %}
 
 root:
     user.present:
