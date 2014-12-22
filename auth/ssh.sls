@@ -3,7 +3,7 @@ openssh-server:
         - installed
 
 ssh:
-    server.running:
+    service.running:
         - enable: True
         - watch:
             - file: /etc/ssh/sshd_config
