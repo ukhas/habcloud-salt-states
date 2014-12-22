@@ -18,3 +18,9 @@ squid3:
       - group: root
       - require:
           - pkg: squid3
+
+extend:
+    /etc/apt/apt.conf.d/10proxy:
+        file.managed:
+          - require:
+              - service: squid3
