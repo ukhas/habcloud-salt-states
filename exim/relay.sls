@@ -10,7 +10,7 @@ include:
       - group: root
       - require:
           - pkg: exim4-daemon-light
-          - file: /etc/exim4/dkim.key
+          - cmd: exim4-dkim
 
 exim4-dkim:
     cmd.run:
