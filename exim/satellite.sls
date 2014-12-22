@@ -1,6 +1,6 @@
 include: exim.common
 
-/etc/exim4/exim4.conf
+/etc/exim4/exim4.conf:
     file.managed:
       - source: salt://exim/satellite.conf
       - template: jinja
