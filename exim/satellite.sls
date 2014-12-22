@@ -6,9 +6,9 @@ include:
       - source: salt://exim/satellite.conf
       - template: jinja
       - defaults:
-          - upstream: support
+            upstream: support
       - mode: 644 
       - user: root
       - group: root
       - require:
-          - pkg: exim4
+          - pkg: exim4-daemon-light

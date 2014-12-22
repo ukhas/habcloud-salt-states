@@ -7,7 +7,7 @@ exim4:
       - enable: True
       - watch:
           - file: /etc/exim4/exim4.conf
-          - pkg: exim4
+          - pkg: exim4-daemon-light
 
 distro-exim-conf:
     file.absent:

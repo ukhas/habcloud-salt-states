@@ -8,7 +8,7 @@ include:
       - user: root
       - group: root
       - require:
-          - pkg: exim4
+          - pkg: exim4-daemon-light
 
 exim4-dkim:
     cmd.run:
