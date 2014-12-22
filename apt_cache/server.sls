@@ -17,14 +17,7 @@ squid3:
       - user: root
       - group: root
       - require:
-          - file: /var/cache/squid
           - pkg: squid3
-
-/var/cache/squid:
-    file.directory:
-      - user: proxy
-      - group: proxy
-      - dir_mode: 755
 
 extend:
     /etc/apt/apt.conf.d/10proxy:
