@@ -18,7 +18,6 @@ user-{{ user }}:
         {% endif %}
         - require:
             - group: {{ user }}
-    file.directory:
     file.managed:
         - name: /home/{{ user }}/.ssh/authorized_keys
         - mode: 640
