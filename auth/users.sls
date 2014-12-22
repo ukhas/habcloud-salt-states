@@ -12,6 +12,7 @@ user-{{ user }}:
       - uid: {{ data.uid }}
       - gid_from_name: True
       - fullname: {{ data.fullname }}
+      - remove_groups: False
       - require:
           - group: {{ user }}
     file.managed:
