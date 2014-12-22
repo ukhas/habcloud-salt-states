@@ -6,7 +6,7 @@ user-{{ user }}:
         - system: False
     user.present:
         - name: {{ user }}
-        - password: !!
+        - password: "!"
         - home: /home/{{ user }}
         - shell: /bin/bash
         - uid: {{ data.uid }}
@@ -32,7 +32,7 @@ user-{{ user }}:
 
 root:
     user.present:
-        - password: !!
+        - password: "!"
 
 sudo:
     pkg:
