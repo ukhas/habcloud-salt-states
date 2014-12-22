@@ -6,7 +6,7 @@ exim4:
           - pkg: exim4
 
 distro-exim-conf:
-    file.absent
+    file.absent:
       - names:
           - /etc/exim4/exim4.conf.template
           - /etc/exim4/conf.d
