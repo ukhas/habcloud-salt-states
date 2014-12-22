@@ -1,4 +1,8 @@
 exim4:
+    pkg:
+      - name: exim4-daemon-light
+      - installed
+
     service.running:
       - enable: True
       - watch:
