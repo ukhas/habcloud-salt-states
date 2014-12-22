@@ -7,6 +7,7 @@ ssh:
       - enable: True
       - watch:
           - file: /etc/ssh/sshd_config
+      - require:
           - pkg: openssh-server
 
 /etc/ssh/sshd_config:

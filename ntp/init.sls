@@ -4,6 +4,7 @@ ntp:
       - enable: True
       - watch:
           - file: /etc/ntp.conf
+      - require:
           - pkg: ntp
 
 /etc/ntp.conf:
