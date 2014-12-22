@@ -4,6 +4,7 @@ include:
 /etc/exim4/exim4.conf:
     file.managed:
       - source: salt://exim/relay.conf
+      - template: jinja
       - mode: 644 
       - user: root
       - group: root
