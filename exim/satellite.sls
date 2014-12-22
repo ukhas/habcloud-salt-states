@@ -6,7 +6,7 @@ include:
       - source: salt://exim/satellite.conf
       - template: jinja
       - defaults:
-            upstream: support
+            upstream: support.private
       - mode: 644 
       - user: root
       - group: root
