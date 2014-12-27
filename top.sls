@@ -1,6 +1,7 @@
 base:
     '*':
       - misc
+      - unattended_upgrades
       - auth.ssh
       - auth.users
       - apt_cache.client
