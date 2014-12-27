@@ -1,8 +1,8 @@
 base:
     '*':
+      - misc
       - auth.ssh
       - auth.users
-      - reqs
       - apt_cache.client
 
     'ceto.habhub.org,phorcys.habhub.org':
