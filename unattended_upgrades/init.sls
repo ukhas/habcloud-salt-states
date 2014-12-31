@@ -9,3 +9,12 @@ unattended-upgrades:
       - group: root
       - require:
           - pkg: unattended-upgrades
+
+/etc/apt/apt.conf.d/20auto-upgrades:
+    file.managed:
+      - source: salt://unattended_upgrades/20auto-upgrades
+      - mode: 644
+      - user: root
+      - group: root
+      - require:
+          - pkg: unattended-upgrades
