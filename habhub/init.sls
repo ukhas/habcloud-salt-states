@@ -5,18 +5,14 @@ extend:
     nginx:
         service:
             - watch:
-                - file: /etc/nginx/sites-available/habhub.org.conf
+                - file: /etc/nginx/conf.d/habhub.org.conf
                 - git: habhub-homepage
                 - git: cusf-burst-calc
 
-/etc/nginx/sites-available/habhub.org.conf:
+/etc/nginx/conf.d/habhub.org.conf:
     file.managed:
         - source: salt://habhub/nginx-site.conf
         - template: jinja
-
-/etc/nginx/sites-enabled/habhub.org.conf:
-    file.symlink:
-        - target: /etc/nginx/sites-available/habhub.org.conf
 
 habhub-homepage:
     git.latest:
@@ -35,8 +31,3 @@ cusf-burst-calc:
         - rev: master
         - always_fetch: true
         - submodules: true
-
-# TODO
-# files/
-# notam_overlay
-# zeusbot

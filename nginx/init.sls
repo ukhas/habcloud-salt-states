@@ -1,10 +1,12 @@
 nginx:
-    pkgrepo.managed:
-        - humanname: nginx stable
-        - name: deb http://nginx.org/packages/debian/ wheezy nginx
-        - dist: wheezy
-        - file: /etc/apt/sources.list.d/nginx.list
-        - key_url: http://nginx.org/keys/nginx_signing.key
+    # By default we use Debian's nginx, but individual VMs may need a more
+    # modern version, so can copy this into their own states
+    #pkgrepo.managed:
+    #    - humanname: nginx stable
+    #    - name: deb http://nginx.org/packages/debian/ wheezy nginx
+    #    - dist: wheezy
+    #    - file: /etc/apt/sources.list.d/nginx.list
+    #    - key_url: http://nginx.org/keys/nginx_signing.key
     pkg:
         - installed
     service.running:
@@ -13,7 +15,7 @@ nginx:
         - watch:
             - pkg: nginx
             - file: /etc/nginx/nginx.conf
-            - file: /etc/nginx/sites-enabled/catchall.conf
+            - file: /etc/nginx/conf.d/catchall.conf
 
 /etc/nginx/nginx.conf:
     file.managed:
@@ -21,17 +23,6 @@ nginx:
         - require:
             - pkg: nginx
 
-distro-nginx-conf:
-    file.absent:
-      - names:
-          - /etc/nginx/sites-available/default
-          - /etc/nginx/sites-enabled/default
-
-
-/etc/nginx/sites-available/catchall.conf:
+/etc/nginx/conf.d/catchall.conf:
     file.managed:
         - source: salt://nginx/site-catchall.conf
-
-/etc/nginx/sites-enabled/catchall.conf:
-    file.symlink:
-        - target: /etc/nginx/sites-available/catchall.conf
