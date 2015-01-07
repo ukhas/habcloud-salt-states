@@ -7,6 +7,7 @@ packages:
           - iotop
           - iftop
           - sysstat
+          - netcat-openbsd
           - python-pip
           - python-virtualenv
 
