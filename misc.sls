@@ -7,6 +7,8 @@ packages:
           - iotop
           - iftop
           - sysstat
+          - python-pip
+          - python-virtualenv
 
 # Unnecessary daemons listening on 0.0.0.0
 purge-useless-nfs:

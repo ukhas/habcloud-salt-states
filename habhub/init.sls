@@ -1,5 +1,6 @@
 include:
     - nginx
+    - .dl_fldigi_version_check
 
 extend:
     nginx:
