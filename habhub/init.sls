@@ -5,7 +5,7 @@ extend:
     nginx:
         service:
             - watch:
-                - file: /etc/nginx/sites-enabled/habhub.org.conf
+                - file: /etc/nginx/sites-available/habhub.org.conf
                 - git: habhub-homepage
                 - git: cusf-burst-calc
 
