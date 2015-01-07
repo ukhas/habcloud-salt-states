@@ -16,6 +16,10 @@
     - require:
         - service: supervisor
 
+/var/lib/gunicorn:
+  file.directory:
+    - dir_mode: 755
+
 /var/lib/gunicorn/{{ user }}:
   file.directory:
     - user: {{ user }}
