@@ -18,7 +18,7 @@ base:
       - match: compound
       - exim.satellite
 
-    adamscratch:
+    adamscratch.habhub.org:
       - habhub
 
 #    'postgres*':
