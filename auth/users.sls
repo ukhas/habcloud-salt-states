@@ -1,4 +1,9 @@
-{% for user, data in pillar["auth"]["users"].items() %}
+{% set groups = pillar["auth"]["groups"][grains.id] %}
+{% set users = pillar["auth"]["users"] %}
+{% set sudoers = groups["sudo"] %}
+{% set normal_users = groups["users"] %}
+
+{% for user, data in users.items() if user in sudoers + normal_users %}
 user-{{ user }}:
     group.present:
       - name: {{ user }}
@@ -33,7 +38,7 @@ purge-user-{{ user }}:
         - name: {{ user }}
 {% endfor %}
 
-{% for group, members in pillar["auth"]["groups"][grains.id].items() %}
+{% for group, members in groups.items() %}
 group-{{ group }}:
     group.present:
         - name: {{ group }}
@@ -43,7 +48,7 @@ group-{{ group }}:
             - {{ member }}
           {% endfor %}
           {% if group == "users" %}
-          {% for member in pillar["auth"]["groups"][grains.id]["sudo"] %}
+          {% for member in sudoers %}
             - {{ member }}
           {% endfor %}
           {% endif %}
