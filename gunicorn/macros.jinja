@@ -1,4 +1,4 @@
-{% macro gunicorn(name, user, venv, dir, app) %}
+{% macro gunicorn(name, user, venv, dir, app, workers) %}
 /etc/supervisor/conf.d/{{ name }}.conf:
   file.managed:
     - source: salt://gunicorn/supervisor.conf
@@ -8,7 +8,7 @@
         venv_path: {{ venv }}
         app: {{ app }}
         socket: /var/lib/gunicorn/{{ user }}/{{ name }}.sock
-        num_workers: 2
+        num_workers: {{ workers }}
         program_dir: {{ dir }}
         user: {{ user }}
     - watch_in:

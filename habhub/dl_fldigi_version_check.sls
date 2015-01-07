@@ -49,7 +49,8 @@ gunicorn_dfvc:
 
 # supervisor+gunicorn
 {{ gunicorn(name="dfvc", user="dfvc", venv="/home/dfvc/venv",
-            dir="/home/dfvc/dl-fldigi/update_server", app="app:app") }}
+            dir="/home/dfvc/dl-fldigi/update_server", app="app:app",
+            workers=2) }}
 
 # restart supervised gunicorn process when dl-fldigi code updates
 supervisor_dfvc:
