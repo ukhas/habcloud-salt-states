@@ -23,5 +23,5 @@ nginx:
 distro-nginx-conf:
     file.absent:
       - names:
-          - /etc/nginx/sites-available/default:
-          - /etc/nginx/sites-enabled/default:
+          - /etc/nginx/sites-available/default
+          - /etc/nginx/sites-enabled/default
