@@ -33,6 +33,7 @@ cusf-burst-calc:
         - force: true
         - rev: master
         - always_fetch: true
+        - submodules: true
 
 # TODO
 # files/
