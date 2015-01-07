@@ -21,5 +21,8 @@ base:
     adamscratch.habhub.org:
       - habhub
 
+    scratch.habhub.org:
+      - habhub
+
 #    'postgres*':
 #        - postgres
