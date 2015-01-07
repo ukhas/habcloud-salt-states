@@ -1,7 +1,7 @@
 #!pydsl
 
 root = __pillar__["auth"]["groups"][__grains__["id"]]["sudo"]
-users = [u for u in __pillar__["auth"]["users"] if u in root]
+users = __pillar__["auth"]["users"]
 
 lines = ["{0}: {1}".format(n, u["email"]) for n, u in users.items()]
 lines.append("root: " + ", ".join(root))
