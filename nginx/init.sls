@@ -19,3 +19,9 @@ nginx:
         - source: salt://nginx/nginx.conf
         - require:
             - pkg: nginx
+
+distro-nginx-conf:
+    file.absent:
+      - names:
+          - /etc/nginx/sites-available/default:
+          - /etc/nginx/sites-enabled/default:
