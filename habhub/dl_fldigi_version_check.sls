@@ -19,7 +19,7 @@ dfvc:
 # fetch dl-fldigi git repo, which contains update server source
 dl-fldigi-code:
     git.latest:
-        - name: https://github.com/jamescoxon/dl-fldigi.git
+        - name: https://github.com/ukhas/dl-fldigi.git
         - target: /home/dfvc/dl-fldigi
         - force: true
         - rev: master
