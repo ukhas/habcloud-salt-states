@@ -1,4 +1,4 @@
-{% for user, data in pillar["auth.users"].items() %}
+{% for user, data in pillar["auth"]["users"].items() %}
 user-{{ user }}:
     group.present:
       - name: {{ user }}
@@ -27,7 +27,7 @@ user-{{ user }}:
           - user: {{ user }}
 {% endfor %}
 
-{% for group, members in pillar["auth.groups." + grains.id].items() %}
+{% for group, members in pillar["auth"]["groups"][grains.id].items() %}
 group-{{ group }}:
     group.present:
         - name: {{ group }}
@@ -37,8 +37,8 @@ group-{{ group }}:
             - {{ member }}
           {% endfor %}
           {% if group == "users" %}
-          {% for member in pillar["auth.groups." + grains.id + ".sudo"].items() %}
-            - {{ member }}
+          {% for n in pillar["auth"]["groups"][grains.id]["sudo"].items() %}
+            - {{ n }}
           {% endfor %}
           {% endif %}
 {% endfor %}
