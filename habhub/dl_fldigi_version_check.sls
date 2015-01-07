@@ -1,3 +1,13 @@
+# # dl-fldigi version check server
+# This server is a Python and Flask web app that is served by gunicorn,
+# with process management by supervisor and front end HTTP by nginx.
+#
+# It is hit up by dl-fldigi client software to check if a new version has
+# been released.
+
+include:
+  - supervisor
+
 # dl-fldigi version check user
 dfvc:
   group.present:
@@ -34,17 +44,24 @@ gunicorn:
     - require:
       - virtualenv: /home/dfvc/venv
 
-# we use supervisor to run gunicorn
-supervisor:
-  pkg.installed: []
-  service.running:
-    - watch: 
-      - file: /etc/supervisor/conf.d/dfvc.conf
-
 # supervisor config file
 /etc/supervisor/conf.d/dfvc.conf:
   file.managed:
-    - source: salt://habhub/supervisor.conf
+    - source: salt://supervisor/gunicorn-template.conf
+    - template: jinja
+    - context:
+        name: dfvc
+        venv_path: /home/dfvc/venv
+        app: "app:app"
+        port: 8001
+        num_workers: 2
+        program_dir: /home/dfvc/dl-fldigi/update_server
+        user: dfvc
+extend:
+  supervisor:
+    service:
+      - watch: 
+        - file: /etc/supervisor/conf.d/dfvc.conf
 
 # restart supervised gunicorn process when dl-fldigi code updates
 supervisor_dfvc:
