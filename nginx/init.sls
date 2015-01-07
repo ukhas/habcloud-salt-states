@@ -26,3 +26,7 @@ nginx:
 /etc/nginx/conf.d/catchall.conf:
     file.managed:
         - source: salt://nginx/site-catchall.conf
+
+/etc/nginx/proxy_params:
+    file.managed:
+        - source: salt://nginx/proxy_params
