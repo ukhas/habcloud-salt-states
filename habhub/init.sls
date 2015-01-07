@@ -21,7 +21,6 @@ habhub-homepage:
         - target: /srv/habhub-homepage
         - force: true
         - rev: master
-        - user: www-data
         - always_fetch: True
 
 cusf-burst-calc:
@@ -30,7 +29,6 @@ cusf-burst-calc:
         - target: /srv/cusf-burst-calc
         - force: true
         - rev: master
-        - user: www-data
         - always_fetch: True
 
 # TODO
