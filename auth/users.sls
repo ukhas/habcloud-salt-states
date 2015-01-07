@@ -37,8 +37,8 @@ group-{{ group }}:
             - {{ member }}
           {% endfor %}
           {% if group == "users" %}
-          {% for n in pillar["auth"]["groups"][grains.id]["sudo"].items() %}
-            - {{ n }}
+          {% for member in pillar["auth"]["groups"][grains.id]["sudo"] %}
+            - {{ member }}
           {% endfor %}
           {% endif %}
 {% endfor %}
