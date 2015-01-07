@@ -1,7 +1,7 @@
 {% set users = pillar["auth"]["users"] %}
 {% set groups = pillar["auth"]["groups"][grains.id] %}
 {% set sudoers = groups["sudo"] %}
-{% set normal_users = groups["users"] %}
+{% set normal_users = groups.get("users", []) %}
 
 {% for user, data in users.items() if user in sudoers + normal_users %}
 user-{{ user }}:
