@@ -8,6 +8,8 @@
 include:
   - supervisor
 
+{% from "gunicorn/macros.jinja" import gunicorn %}
+
 # dl-fldigi version check user
 dfvc:
   group.present:
@@ -37,31 +39,17 @@ dl-fldigi-code:
       - git: dl-fldigi-code
 
 # install gunicorn into venv
-gunicorn:
+gunicorn_dfvc:
   pip.installed:
+    - name: gunicorn
     - bin_env: /home/dfvc/venv
     - user: dfvc
     - require:
       - virtualenv: /home/dfvc/venv
 
-# supervisor config file
-/etc/supervisor/conf.d/dfvc.conf:
-  file.managed:
-    - source: salt://supervisor/gunicorn-template.conf
-    - template: jinja
-    - context:
-        name: dfvc
-        venv_path: /home/dfvc/venv
-        app: "app:app"
-        port: 8001
-        num_workers: 2
-        program_dir: /home/dfvc/dl-fldigi/update_server
-        user: dfvc
-extend:
-  supervisor:
-    service:
-      - watch: 
-        - file: /etc/supervisor/conf.d/dfvc.conf
+# supervisor+gunicorn
+{{ gunicorn(name="dfvc", user="dfvc", venv="/home/dfvc/venv",
+            dir="/home/dfvc/dl-fldigi/update_server", app="app:app") }}
 
 # restart supervised gunicorn process when dl-fldigi code updates
 supervisor_dfvc:
