@@ -27,6 +27,12 @@ user-{{ user }}:
           - user: {{ user }}
 {% endfor %}
 
+{% for user in pillar["auth"]["purged_users"] %}
+purge-user-{{ user }}:
+    user.absent:
+        - name: {{ user }}
+{% endfor %}
+
 {% for group, members in pillar["auth"]["groups"][grains.id].items() %}
 group-{{ group }}:
     group.present:
