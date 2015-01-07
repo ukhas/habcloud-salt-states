@@ -1,4 +1,23 @@
+{# gunicorn macro for quickly setting up a python web app #}
+{#  {% from "gunicorn/macros.jinja" import gunicorn %}    #}
+{# name: arbitrary name of this application               #}
+{# user: the system user that should own and run the app  #}
+{# venv: path to the virtualenv containing the app        #}
+{# dir:  path to the app's main application py file       #}
+{# app:  wsgi path to the wsgi app object e.g. app:app    #}
+{# workers: number of gunicorn workers to run             #}
 {% macro gunicorn(name, user, venv, dir, app, workers) %}
+
+# install gunicorn into venv
+gunicorn-{{ name }}:
+    pip.installed:
+        - name: gunicorn
+        - bin_env: {{ venv }}
+        - user: {{ user }}
+        - require:
+            - virtualenv: {{ venv }}
+
+# provision supervisor config file to autostart the app
 /etc/supervisor/conf.d/{{ name }}.conf:
   file.managed:
     - source: salt://gunicorn/supervisor.conf
@@ -13,6 +32,12 @@
         user: {{ user }}
     - watch_in:
         - service: supervisor
+
+# supervisor process, so that other states can use watch_in
+# e.g.: my-app-code: git.latest: - watch_in: - supervisord: supervisor-my-app
+supervisor-{{ name }}:
+    supervisord.running:
+        - name: {{ name }}
 
 /var/lib/gunicorn:
   file.directory:

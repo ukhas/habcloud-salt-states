@@ -27,6 +27,8 @@ dl-fldigi-code:
     - rev: master
     - user: dfvc
     - always_fetch: true
+    - watch_in:
+      - supervisord: supervisor-dfvc
 
 # create venv
 /home/dfvc/venv:
@@ -38,23 +40,7 @@ dl-fldigi-code:
     - watch:
       - git: dl-fldigi-code
 
-# install gunicorn into venv
-gunicorn_dfvc:
-  pip.installed:
-    - name: gunicorn
-    - bin_env: /home/dfvc/venv
-    - user: dfvc
-    - require:
-      - virtualenv: /home/dfvc/venv
-
 # supervisor+gunicorn
 {{ gunicorn(name="dfvc", user="dfvc", venv="/home/dfvc/venv",
             dir="/home/dfvc/dl-fldigi/update_server", app="app:app",
             workers=2) }}
-
-# restart supervised gunicorn process when dl-fldigi code updates
-supervisor_dfvc:
-  supervisord.running:
-    - name: dfvc
-    - watch:
-      - git: dl-fldigi-code
