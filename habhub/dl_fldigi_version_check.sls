@@ -39,7 +39,7 @@ supervisor:
   pkg.installed: []
   service.running:
     - watch: 
-    - file: /etc/supervisor/conf.d/dfvc.conf
+      - file: /etc/supervisor/conf.d/dfvc.conf
 
 # supervisor config file
 /etc/supervisor/conf.d/dfvc.conf:
