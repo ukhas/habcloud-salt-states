@@ -6,6 +6,8 @@ extend:
         service:
             - watch:
                 - file: /etc/nginx/sites-enabled/www.habhub.org.conf
+                - git: habhub-homepage
+                - git: cusf-burst-calc
 
 /etc/nginx/sites-available/www.habhub.org.conf:
     file.managed:
@@ -21,7 +23,8 @@ habhub-homepage:
         - target: /srv/habhub-homepage
         - force: true
         - rev: master
-        - always_fetch: True
+        - always_fetch: true
+        - submodules: true
 
 cusf-burst-calc:
     git.latest:
@@ -29,7 +32,7 @@ cusf-burst-calc:
         - target: /srv/cusf-burst-calc
         - force: true
         - rev: master
-        - always_fetch: True
+        - always_fetch: true
 
 # TODO
 # files/
