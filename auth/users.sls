@@ -1,4 +1,4 @@
-{% for user, data in pillar["users"].items() %}
+{% for user, data in pillar["auth.users"].items() %}
 user-{{ user }}:
     group.present:
       - name: {{ user }}
@@ -17,40 +17,31 @@ user-{{ user }}:
           - group: {{ user }}
     file.managed:
       - name: /home/{{ user }}/.ssh/authorized_keys
-      - mode: 640
+      - mode: 600
       - user: {{ user }}
       - group: {{ user }}
-      - contents_pillar: users:{{ user }}:ssh_keys
+      - contents_pillar: auth:users:{{ user }}:ssh_keys
       - makedirs: true
-      - dir_mode: 750
+      - dir_mode: 700
       - require:
           - user: {{ user }}
 {% endfor %}
 
-# By specifying these groups explicitly, deletion of users from
-# pillar will result in ssh and sudo being disabled, and it will
-# remove unrecognised users from sudo/users.
-group-users:
+{% for group, members in pillar["auth.groups." + grains.id].items() %}
+group-{{ group }}:
     group.present:
-      - name: users
-      - system: true
-      - members:
-        {% for user in pillar["users"] %}
-          - {{ user }}
-        {% endfor %}
-
-group-sudo:
-    group.present:
-      - names:
-         - sudo
-         - adm
-      - system: true
-      - members:
-        {% for user, data in pillar["users"].items() %}
-        {% if data.sudo %}
-          - {{ user }}
-        {% endif %}
-        {% endfor %}
+        - name: {{ group }}
+        - system: {{ "true" if group in ("sudo", "users") else "false" }}
+        - members:
+          {% for member in members %}
+            - {{ member }}
+          {% endfor %}
+          {% if group == "users" %}
+          {% for member in pillar["auth.groups." + grains.id + ".sudo"].items() %}
+            - {{ member }}
+          {% endfor %}
+          {% endif %}
+{% endfor %}
 
 root:
     user.present:
