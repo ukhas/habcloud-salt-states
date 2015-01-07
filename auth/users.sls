@@ -72,3 +72,11 @@ sudo:
       - group: root
       - require:
           - pkg: sudo
+
+/etc/pam.d/common-session:
+    file.append:
+      - text: 'session optional pam_umask.so usergroups umask=0022'
+
+/etc/pam.d/common-session-noninteractive:
+    file.append:
+      - text: 'session optional pam_umask.so usergroups umask=0022'
