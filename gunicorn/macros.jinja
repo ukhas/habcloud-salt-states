@@ -14,7 +14,7 @@
     - watch_in:
         - service: supervisor
     - require:
-        - sls: supervisor
+        - service: supervisor
 
 /var/lib/gunicorn/{{ user }}:
   file.directory:
