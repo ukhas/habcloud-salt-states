@@ -13,8 +13,6 @@
         user: {{ user }}
     - watch_in:
         - service: supervisor
-    - require:
-        - service: supervisor
 
 /var/lib/gunicorn:
   file.directory:
