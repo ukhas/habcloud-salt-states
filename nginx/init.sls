@@ -32,7 +32,7 @@ nginx:
         - source: salt://nginx/proxy_params
 
 /srv/nginx-common/robots.txt:
-  file.managed.:
+  file.managed:
     - source: salt://nginx/robots.txt
     - mode: 644
     - mkdirs: true
