@@ -48,3 +48,8 @@ supervisor-saltbot:
       - git: saltbot-code
       - file: /home/saltbot/saltbot.yml
       - file: /etc/supervisor/conf.d/saltbot.conf
+
+/etc/nginx/conf.d/saltbot.conf:
+  file.managed:
+    - source: salt://saltbot/nginx-site.conf
+    - template: jinja
