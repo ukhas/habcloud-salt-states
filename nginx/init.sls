@@ -35,12 +35,12 @@ nginx:
   file.managed:
     - source: salt://nginx/robots.txt
     - mode: 644
-    - mkdirs: true
+    - makedirs: true
     - dir_mode: 755
 
 /srv/nginx-common/favicon.ico:
   file.managed:
     - source: salt://nginx/favicon.ico
     - mode: 644
-    - mkdirs: true
+    - makedirs: true
     - dir_mode: 755
