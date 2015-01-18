@@ -20,6 +20,8 @@ base:
 
     adamscratch.habhub.org:
       - habhub
+
+    salt.habhub.org:
       - saltbot
 
 #    'postgres*':
