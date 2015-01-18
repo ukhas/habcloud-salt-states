@@ -12,10 +12,10 @@ include:
 
 # dl-fldigi version check user
 dfvc:
-  group.present:
-    - system: false
+  group.present: []
   user.present:
     - home: /home/dfvc
+    - system: true
     - gid_from_name: true
 
 # fetch dl-fldigi git repo, which contains update server source

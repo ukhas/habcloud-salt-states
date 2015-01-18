@@ -3,10 +3,10 @@ include:
   - nginx
 
 saltbot:
-  group.present:
-    - system: false
+  group.present: []
   user.present:
     - home: /home/saltbot
+    - system: true
     - gid_from_name: true
 
 saltbot-code:
