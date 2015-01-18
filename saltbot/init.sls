@@ -35,6 +35,17 @@ saltbot-code:
     - watch:
       - git: saltbot-code
 
+saltbot-install:
+  pip.installed:
+    - editable: /home/saltbot/saltbot
+    - bin_env: /home/saltbot/venv
+    - user: saltbot
+    - upgrade: True
+    - watch:
+        - git: saltbot-code
+    - require:
+        - virtualenv: /home/saltbot/venv
+
 /etc/supervisor/conf.d/saltbot.conf:
   file.managed:
     - source: salt://saltbot/supervisor.conf
