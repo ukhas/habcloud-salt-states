@@ -51,7 +51,7 @@ saltbot-tables:
   cmd.wait:
     - name: /home/saltbot/venv/bin/saltbot-createtables /home/saltbot/saltbot.yml
     - user: saltbot
-    - group: user
+    - group: saltbot
     - cwd: /home/saltbot
     - watch:
       - pip: saltbot-install
