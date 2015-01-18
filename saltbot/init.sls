@@ -1,5 +1,6 @@
 include:
   - supervisor
+  - nginx
 
 saltbot:
   group.present:
