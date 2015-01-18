@@ -29,7 +29,7 @@ saltbot-code:
 
 /home/saltbot/venv:
   virtualenv.managed:
-    - no_site_packages: false
+    - system_site_packages: true
     - distribute: true
     - user: saltbot
     - requirements: /home/saltbot/saltbot/requirements.txt
