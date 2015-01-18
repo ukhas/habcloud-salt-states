@@ -47,6 +47,15 @@ saltbot-install:
     - require:
         - virtualenv: /home/saltbot/venv
 
+saltbot-tables:
+  cmd.wait:
+    name: /home/saltbot/venv/bin/saltbot-createtables /home/saltbot/saltbot.yml
+    user: saltbot
+    group: user
+    cwd: /home/saltbot
+    watch:
+      - pip: saltbot-install
+
 /etc/supervisor/conf.d/saltbot.conf:
   file.managed:
     - source: salt://saltbot/supervisor.conf
@@ -65,3 +74,5 @@ supervisor-saltbot:
   file.managed:
     - source: salt://saltbot/nginx-site.conf
     - template: jinja
+    - watch_in:
+      - service: nginx
