@@ -10,18 +10,18 @@ base:
       - match: list
       - ntp
 
-    support.habhub.org:
+    support.vm.habhub.org:
       - exim.relay
       - apt_cache.server
 
-    'not support.habhub.org':
+    'not support.vm.habhub.org':
       - match: compound
       - exim.satellite
 
-    adamscratch.habhub.org:
+    adamscratch.vm.habhub.org:
       - habhub
 
-    salt.habhub.org:
+    salt.vm.habhub.org:
       - saltbot
 
 #    'postgres*':
