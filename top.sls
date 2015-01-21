@@ -14,7 +14,7 @@ base:
       - exim.relay
       - apt_cache.server
 
-    'not support.vm.habhub.org':
+    '* and not support.vm.habhub.org':
       - match: compound
       - exim.satellite
 
