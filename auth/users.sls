@@ -52,7 +52,7 @@ group-{{ group }}:
           {% endfor %}
 {% endfor %}
 
-add-sudoers-to-users-and-adm:
+add-sudoers-to-users:
     group.present:
         - name: users
         - system: true
@@ -61,6 +61,7 @@ add-sudoers-to-users-and-adm:
             - {{ user }}
           {% endfor %}
 
+add-sudoers-to-adm:
     group.present:
         - name: adm
         - system: true
