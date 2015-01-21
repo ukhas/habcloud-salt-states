@@ -3,6 +3,7 @@
 {% set sudoers = groups["sudo"] %}
 {% set normal_users = groups.get("users", []) %}
 {% set all_vm_users = sudoers + normal_users %}
+{% if 'users' not in groups %}{% set groups['users'] = [] %}{% endif %}
 
 {% for user, data in users.items() if user in all_vm_users %}
 user-{{ user }}:
@@ -50,16 +51,13 @@ group-{{ group }}:
           {% for member in members %}
             - {{ member }}
           {% endfor %}
-{% endfor %}
-
-add-sudoers-to-users:
-    group.present:
-        - name: users
-        - system: true
-        - addusers:
-          {% for user in sudoers %}
-            - {{ user }}
+          {# Put all sudoers in the users group too (for ssh access etc) #}
+          {% if group == "users" %}
+          {% for member in sudoers %}
+            - {{ member }}
           {% endfor %}
+          {% endif %}
+{% endfor %}
 
 add-sudoers-to-adm:
     group.present:
