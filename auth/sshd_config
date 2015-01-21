@@ -17,7 +17,7 @@ LoginGraceTime 120
 PermitRootLogin no
 StrictModes yes
 
-AllowGroups users sudo
+AllowGroups users
 
 PubkeyAuthentication yes
 

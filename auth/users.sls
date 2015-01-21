@@ -2,8 +2,9 @@
 {% set groups = pillar["auth"]["groups"][grains.id] %}
 {% set sudoers = groups["sudo"] %}
 {% set normal_users = groups.get("users", []) %}
+{% set all_vm_users = sudoers + normal_users %}
 
-{% for user, data in users.items() if user in sudoers + normal_users %}
+{% for user, data in users.items() if user in all_vm_users %}
 user-{{ user }}:
     group.present:
       - name: {{ user }}
@@ -32,7 +33,7 @@ user-{{ user }}:
           - user: {{ user }}
 {% endfor %}
 
-{% for user in users.keys() if user not in sudoers + normal_users %}
+{% for user in users.keys() if user not in all_vm_users %}
 remove-user-{{ user }}:
     user.absent:
         - name: {{ user }}
@@ -49,12 +50,24 @@ group-{{ group }}:
           {% for member in members %}
             - {{ member }}
           {% endfor %}
-          {% if group == "users" %}
-          {% for member in sudoers %}
-            - {{ member }}
-          {% endfor %}
-          {% endif %}
 {% endfor %}
+
+add-sudoers-to-users-and-adm:
+    group.present:
+        - name: users
+        - system: true
+        - addusers:
+          {% for user in sudoers %}
+            - {{ user }}
+          {% endfor %}
+
+    group.present:
+        - name: adm
+        - system: true
+        - addusers:
+          {% for user in sudoers %}
+            - {{ user }}
+          {% endfor %}
 
 root:
     user.present:
