@@ -35,11 +35,11 @@ saltbot-code:
       - git: saltbot-code
 
 saltbot-install:
-  pip.installed:
-    - name: saltbot-dev
-    - editable: /home/saltbot/saltbot
-    - bin_env: /home/saltbot/venv
+  cmd.wait:
+    - name: /home/saltbot/venv/bin/python setup.py develop
     - user: saltbot
+    - group: saltbot
+    - cwd: /home/saltbot/saltbot
     - watch:
         - git: saltbot-code
     - require:
@@ -52,7 +52,7 @@ saltbot-tables:
     - group: saltbot
     - cwd: /home/saltbot
     - watch:
-      - pip: saltbot-install
+      - cmd: saltbot-install
 
 /etc/supervisor/conf.d/saltbot.conf:
   file.managed:
