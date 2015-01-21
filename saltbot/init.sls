@@ -41,7 +41,6 @@ saltbot-install:
     - editable: /home/saltbot/saltbot
     - bin_env: /home/saltbot/venv
     - user: saltbot
-    - upgrade: True
     - watch:
         - git: saltbot-code
     - require:
