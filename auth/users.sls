@@ -41,21 +41,26 @@ remove-user-{{ user }}:
         - purge: false
 {% endfor %}
 
-{% for group, members in groups.items() %}
-group-{{ group }}:
+group-users:
     group.present:
-        - name: {{ group }}
-        - system: {{ "true" if group in ("sudo", "users") else "false" }}
+        - name: users
+        - system: true
         - members:
-          {% if group == "users" %}
           {% for user in all_vm_users %}
             - {{ user }}
           {% endfor %}
-          {% else %}
+
+{% for group, members in groups.items() %}
+{% if group != "users" %}
+group-{{ group }}:
+    group.present:
+        - name: {{ group }}
+        - system: {{ "true" if group == "sudo" else "false" }}
+        - members:
           {% for user in members %}
             - {{ user }}
           {% endfor %}
-          {% endif %}
+{% endif %}
 {% endfor %}
 
 add-sudoers-to-adm:
