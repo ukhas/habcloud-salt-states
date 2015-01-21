@@ -36,6 +36,7 @@ saltbot-code:
 
 saltbot-install:
   pip.installed:
+    - name: saltbot-dev
     - editable: /home/saltbot/saltbot
     - bin_env: /home/saltbot/venv
     - user: saltbot
