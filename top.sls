@@ -18,11 +18,8 @@ base:
       - match: compound
       - exim.satellite
 
-    adamscratch.vm.habhub.org:
+    habhub.vm.habhub.org:
       - habhub
 
     salt.vm.habhub.org:
       - saltbot
-
-#    'postgres*':
-#        - postgres
