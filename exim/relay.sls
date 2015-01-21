@@ -6,6 +6,8 @@ include:
     file.managed:
       - source: salt://exim/relay.conf
       - template: jinja
+      - defaults:
+          - dkim_selector: support
       - mode: 644 
       - user: root
       - group: root
