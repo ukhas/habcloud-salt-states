@@ -17,8 +17,6 @@ saltbot-code:
     - rev: master
     - user: saltbot
     - always_fetch: true
-    - watch_in:
-      - supervisord: supervisor-saltbot
 
 /home/saltbot/saltbot.yml:
   file.managed:
@@ -64,7 +62,7 @@ saltbot-tables:
 supervisor-saltbot:
   supervisord.running:
     - name: saltbot
-    - require:
+    - watch:
       - git: saltbot-code
       - file: /home/saltbot/saltbot.yml
       - file: /etc/supervisor/conf.d/saltbot.conf
