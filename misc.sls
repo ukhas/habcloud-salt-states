@@ -4,6 +4,7 @@ packages:
           - git
           - vim
           - htop
+          - rsync
           - iotop
           - iftop
           - sysstat
