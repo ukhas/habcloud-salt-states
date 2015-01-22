@@ -26,8 +26,8 @@ exim4-dkim:
 exim4-dkim-pub:
     cmd.run:
       - name: |
-            openssl rsa -in /etc/exim4/dkim.key 
-                        -out /etc/exim4/dkim.public.key 
+            openssl rsa -in /etc/exim4/dkim.key \
+                        -out /etc/exim4/dkim.public.key \
                         -pubout -outform PEM
       - creates: /etc/exim4/dkim.public.key
       - require:
