@@ -23,6 +23,16 @@ exim4-dkim:
       - require:
           - pkg: exim4-daemon-light
 
+exim4-dkim-pub:
+    cmd.run:
+      - name: |
+            openssl rsa -in /etc/exim4/dkim.key 
+                        -out /etc/exim4/dkim.public.key 
+                        -pubout -outform PEM
+      - creates: /etc/exim4/dkim.public.key
+      - require:
+          - cmd: exim4-dkim
+
 extend:
     exim4:
         service.running:
