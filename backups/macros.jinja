@@ -7,5 +7,5 @@
     - minute: random
     - hour: 3
     - dayweek: 0
-    - name: "{{ cmd }} | gzip | gpg --homedir /root/.gnupg/ -e -r CB18E7F8 --always-trust | s3cmd put -q - s3://{{ grains.id }}/{{ name }}-$(date +'%Y%m%dT%H%M%S`).gz.gpg"
+    - name: "{{ cmd }} | gzip | gpg --homedir /root/.gnupg -e -r CB18E7F8 --always-trust | s3cmd put -q - s3://{{ grains.id }}/{{ name }}-$(date +'%Y%m%dT%H%M%S`).gz.gpg"
 {% endmacro %}
