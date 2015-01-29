@@ -12,7 +12,7 @@
 s3cmd:
   pip.installed
 
-gpg:
+gnupg:
   pkg.installed
 
 /root/habhub_backups_pubkey.asc:
