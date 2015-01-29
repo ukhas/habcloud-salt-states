@@ -21,7 +21,7 @@ gnupg:
 
 backups-import-key:
   cmd.wait:
-    - name: gpg --homedir /root --import /root/habhub_backups_pubkey.asc
+    - name: gpg --homedir /root/.gnupg/ --import /root/habhub_backups_pubkey.asc
     - watch:
       - file: /root/habhub_backups_pubkey.asc
 
