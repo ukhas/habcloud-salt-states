@@ -1,11 +1,13 @@
-{# Macro to setup a backup job. #}
-{# name: backup filename, something short and concise. #}
+{# Macro to setup a backup job.                                             #}
+{# name: backup filename, something short and concise.                      #}
 {# cmd: the command to run that will send to stdout whatever is to be saved #}
+{#      try to avoid "s in the cmd please                                   #}
 {% macro backup(name, cmd) %}
 "backup-{{ name }}":
   cron.present:
     - minute: random
     - hour: 3
     - dayweek: 0
-    - name: "{{ cmd }} | gzip | gpg --homedir /root/.gnupg -e -r CB18E7F8 --always-trust | s3cmd put -q - s3://{{ grains.id }}/{{ name }}-$(date +'%Y%m%dT%H%M%S`).gz.gpg"
+    - name: "{{ cmd }} | gzip | gpg --homedir /root/.gnupg -e -r CB18E7F8 --always-trust | s3cmd put -q - s3://{{ grains.id }}/{{ name }}-$(date +'%Y%m%dT%H%M%S').gz.gpg"
+    - identifier: "backup-{{ name }}"
 {% endmacro %}
