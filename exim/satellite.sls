@@ -12,3 +12,6 @@ include:
       - group: root
       - require:
           - pkg: exim4-daemon-light
+
+/etc/aliases:
+    file.absent
