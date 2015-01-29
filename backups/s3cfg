@@ -1,0 +1,4 @@
+[default]
+access_key = {{ pillar['backups'][grains.id.replace('.', '_')]['access_key'] }}
+secret_key = {{ pillar['backups'][grains.id.replace('.', '_')]['secret_key'] }}
+use_https = True
