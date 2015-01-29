@@ -25,17 +25,4 @@ postgresql:
       - file: /etc/postgresql/{{ version }}/main/postgresql.conf
       - file: /etc/postgresql/{{ version }}/main/pg_hba.conf
 
-{% for conffile in "postgresql", "pg_hba" %}
-# For now we'll stick with the default shipped config file
-#/etc/postgresql/{{ version }}/main/{{ conffile }}.conf:
-#  file.managed:
-#    - source: salt://postgres/{{ conffile }}.conf.{{ version }}
-#    - template: jinja
-#    - mode: 644
-#    - user: postgres
-#    - group: postgres
-#    - require:
-#      - pkg: postgresql-{{ version }}
-{% endfor %}
-
 {% endmacro %}
