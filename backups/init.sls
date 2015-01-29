@@ -17,16 +17,16 @@ gpg:
 
 /root/habhub_backups_pubkey.asc:
   file.managed:
-    source: salt://backups/habhub_backups_pubkey.asc
+    - source: salt://backups/habhub_backups_pubkey.asc
 
 backups-import-key:
   cmd.wait:
-    name: gpg --import /root/habhub_backups_pubkey.asc
-    watch:
-      file: /root/habhub_backups_pubkey.asc
+    - name: gpg --import /root/habhub_backups_pubkey.asc
+    - watch:
+      - file: /root/habhub_backups_pubkey.asc
 
 /root/.s3cfg:
   file.managed:
-    source: salt://backups/s3cfg
-    mode: 600
-    template: jinja
+    - source: salt://backups/s3cfg
+    - mode: 600
+    - template: jinja
