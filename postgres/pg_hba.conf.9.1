@@ -72,11 +72,8 @@
 # listen on a non-local interface via the listen_addresses
 # configuration parameter, or via the -i or -h command line switches.
 
-{% for user in pillar['postgres']['users'] %}
-{% for ips in salt['publish.publish']('*'+user+'*', 'network.ip_addrs').values() %}
-host {{ pillar['postgres']['databases'].keys()|join(',') }} {{ user }} {{ ips[0] }}/32 md5
-{% endfor %}
-{% endfor %}
+
+
 
 # DO NOT DISABLE!
 # If you change this first entry you will need to make sure that the
@@ -100,4 +97,3 @@ host    all             all             ::1/128                 md5
 #local   replication     postgres                                peer
 #host    replication     postgres        127.0.0.1/32            md5
 #host    replication     postgres        ::1/128                 md5
-
