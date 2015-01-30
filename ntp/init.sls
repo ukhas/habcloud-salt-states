@@ -18,10 +18,10 @@ ntp:
                 - ntp1.metronet-uk.com
                 - ntp2.metronet-uk.com
             peers:
-                {% if grains["hostname"] != "ceto" %}
+                {% if grains["host"] != "ceto" %}
                 - ceto
                 {% endif %}
-                {% if grains["hostname"] != "phorcys" %}
+                {% if grains["host"] != "phorcys" %}
                 - phorcys
                 {% endif %}
       - mode: 644
