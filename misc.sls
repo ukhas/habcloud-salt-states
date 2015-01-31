@@ -1,4 +1,4 @@
-packages:
+misc-packages:
     pkg.installed:
       - names:
           - git
