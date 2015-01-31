@@ -27,3 +27,6 @@ base:
     adamscratch.vm.habhub.org:
       - backups
       - adamscratch
+
+    scratch.vm.habhub.org:
+      - ntp
