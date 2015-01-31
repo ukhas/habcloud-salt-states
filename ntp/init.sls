@@ -12,18 +12,22 @@ ntp:
       - source: salt://ntp/ntp.conf
       - template: jinja
       - defaults:
+
+            {% if grains["host"] in ("ceto", "phorcys") %}
             upstream:
                 # ntp `restrict` lines don't appear to be able to handle
                 # DNS that resolves to multiple IP addresses correctly
                 - ntp1.metronet-uk.com
                 - ntp2.metronet-uk.com
+            {% else %}
+            upstream: []
+            {% endif %}
+
             peers:
-                {% if grains["host"] != "ceto" %}
-                - ceto
-                {% endif %}
-                {% if grains["host"] != "phorcys" %}
-                - phorcys
-                {% endif %}
+                {% for host in ("ceto", "phorcys") if grains["host"] != host %}
+                - {{ host }}
+                {% endfor %}
+
       - mode: 644
       - user: root
       - group: root
