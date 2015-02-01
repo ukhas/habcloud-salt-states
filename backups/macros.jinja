@@ -4,7 +4,7 @@
 {#      try to avoid "s in the cmd please                                   #}
 {% macro backup(name, user, cmd) %}
 "backup-{{ name }}":
-  file.present:
+  file.managed:
     - name: /root/backups/{{ name }}.sh
     - mkdirs: true
     - dirmode: 700
