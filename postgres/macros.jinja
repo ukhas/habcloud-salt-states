@@ -21,8 +21,5 @@ postgresql:
       {% if from_upstream %}
       - pkgrepo: postgresql_repo
       {% endif %}
-    - watch:
-      - file: /etc/postgresql/{{ version }}/main/postgresql.conf
-      - file: /etc/postgresql/{{ version }}/main/pg_hba.conf
 
 {% endmacro %}
