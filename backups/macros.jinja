@@ -2,12 +2,24 @@
 {# name: backup filename, something short and concise.                      #}
 {# cmd: the command to run that will send to stdout whatever is to be saved #}
 {#      try to avoid "s in the cmd please                                   #}
-{% macro backup(name, cmd) %}
+{% macro backup(name, user, cmd) %}
 "backup-{{ name }}":
+  file.present:
+    - name: /root/backups/{{ name }}.sh
+    - mkdirs: true
+    - dirmode: 700
+    - user: root
+    - mode: 700
+    - source: salt://backups/job.sh
+    - template: jinja
+    - context:
+        name: {{ name }}
+        user: {{ user }}
+        cmd: {{ cmd }}
   cron.present:
     - minute: random
     - hour: 3
     - dayweek: 0
-    - name: "nice ionice -c 3 {{ cmd }} | sudo -u backups nice ionice -c 3 /home/backups/backup.sh s3://{{ grains.id }}/{{ name }}-`echo -n $(date +'\\%Y\\%m\\%dT\\%H\\%M\\%S')`.gz.gpg"
+    - name: /root/backups/{{ name }}.sh
     - identifier: "backup-{{ name }}"
 {% endmacro %}
