@@ -1,8 +1,8 @@
 Unattended-Upgrade::Origins-Pattern {
-        "o=Debian,a=stable";
-        "o=Debian,a=stable-updates";
-        "origin=Debian,archive=stable,label=Debian-Security";
-        "origin=Debian,archive=oldstable,label=Debian-Security";
+        "o=Debian";
+        "o=saltstack.com";
+        "o=nginx";
+        "o=apt.postgresql.org";
 };
 
 Unattended-Upgrade::Mail "root";
