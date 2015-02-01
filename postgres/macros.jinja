@@ -1,0 +1,28 @@
+{% macro postgresql_setup(version, from_upstream=False) %}
+
+{% if from_upstream %}
+postgresql_repo:
+  pkgrepo.managed:
+    - humanname: postgresql stable
+    - name: deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main
+    - dist: wheezy-pgdg
+    - file: /etc/apt/sources.list.d/postgresql.list
+    - key_url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+{% endif %}
+
+postgresql:
+  pkg.installed:
+    - name: postgresql-{{ version }}
+  service.running:
+    - reload: true
+    - enable: true
+    - require:
+      - pkg: postgresql-{{ version }}
+      {% if from_upstream %}
+      - pkgrepo: postgresql_repo
+      {% endif %}
+    - watch:
+      - file: /etc/postgresql/{{ version }}/main/postgresql.conf
+      - file: /etc/postgresql/{{ version }}/main/pg_hba.conf
+
+{% endmacro %}
