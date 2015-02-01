@@ -1,7 +1,7 @@
 {# Macro to setup a backup job.                                             #}
 {# name: backup filename, something short and concise.                      #}
+{# user: the user to run `cmd` as                                           #}
 {# cmd: the command to run that will send to stdout whatever is to be saved #}
-{#      try to avoid "s in the cmd please                                   #}
 {% macro backup(name, user, cmd) %}
 "backup-{{ name }}":
   file.managed:
@@ -15,7 +15,7 @@
     - context:
         name: {{ name }}
         user: {{ user }}
-        cmd: {{ cmd }}
+        cmd: {{ cmd|yaml_encode }}
   cron.present:
     - minute: random
     - hour: 3
