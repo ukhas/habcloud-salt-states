@@ -16,3 +16,6 @@ php5-fpm:
         - source: salt://nginx/cgi-fix-pathinfo.conf
         - require:
             - pkg: php5-fpm
+
+/etc/php5/fpm/pool.d/www.conf:
+    file.absent
