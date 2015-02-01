@@ -1,6 +1,7 @@
 include:
   - supervisor
   - nginx
+  - postgres.9_1
 
 saltbot:
   group.present: []
@@ -8,6 +9,9 @@ saltbot:
     - home: /home/saltbot
     - system: true
     - gid_from_name: true
+  postgres_user.present: []
+  postgres_database.present:
+    - owner: postgres
 
 saltbot-code:
   git.latest:
