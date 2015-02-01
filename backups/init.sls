@@ -17,13 +17,13 @@ gnupg:
 
 backups-user:
   group:
-    name: backups
-    system: true
+    - name: backups
+    - system: true
   user:
-    name: backups
-    gid_from_name: true
-    system: true
-    home: /home/backups
+    - name: backups
+    - gid_from_name: true
+    - system: true
+    - home: /home/backups
 
 /home/backups/habhub_backups_pubkey.asc:
   file.managed:
