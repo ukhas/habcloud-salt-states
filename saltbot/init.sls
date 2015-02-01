@@ -22,6 +22,9 @@ saltbot-code:
     - user: saltbot
     - always_fetch: true
 
+python-psycopg2:
+  pkg.installed
+
 /home/saltbot/saltbot.yml:
   file.managed:
     - contents_pillar: saltbot
