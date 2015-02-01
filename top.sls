@@ -23,3 +23,6 @@ base:
 
     salt.vm.habhub.org:
       - saltbot
+
+    adamscratch.vm.habhub.org:
+      - adamscratch_db
