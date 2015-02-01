@@ -32,12 +32,31 @@ python-psycopg2:
     - group: saltbot
     - mode: 600
 
+# Create the venv. We would just put requirements: here, but see below.
 /home/saltbot/venv:
   virtualenv.managed:
     - system_site_packages: true
     - distribute: true
     - user: saltbot
-    - requirements: /home/saltbot/saltbot/requirements.txt
+    - watch:
+      - git: saltbot-code
+
+# We have to use system_site_packages in the venv to put the 'salt' library
+# into the venv (and this is also helpful for python-psycopg2).
+# Unfortunately this means six==1.1.0 is put here, but irc requires (through
+# jaraco modules) that six>=1.4.0 is installed; which means pip can't handle
+# doing everything with just one requirements file.
+# So we install six==1.9.0 first, then process the requirements file.
+saltbot-six-first:
+  pip.installed:
+    - name: six==1.9.0
+    - user: saltbot
+    - bin_env: /home/saltbot/venv
+
+saltbot-reqs:
+  pip.installed:
+    - requrements: /home/saltbot/saltbot/requirements.txt
+    - bin_env: /home/saltbot/venv
     - watch:
       - git: saltbot-code
 
