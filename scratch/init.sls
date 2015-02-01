@@ -8,5 +8,7 @@ include:
     file.managed:
         - source: salt://scratch/nginx-site.conf
         - template: jinja
+        - watch_in:
+            - service: nginx
 
 {{ php_pool("test", user="www-data") }}

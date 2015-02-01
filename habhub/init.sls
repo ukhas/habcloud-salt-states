@@ -14,6 +14,8 @@ extend:
     file.managed:
         - source: salt://habhub/nginx-site.conf
         - template: jinja
+        - watch_in:
+            - service: nginx
 
 habhub-homepage:
     git.latest:
