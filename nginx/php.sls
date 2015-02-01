@@ -10,8 +10,6 @@ php5-fpm:
         - watch:
             - pkg: php5-fpm
             - file: /etc/php5/fpm/php.ini
-            - file: /etc/php5/fpm/php-fpm.conf
-
 
 /etc/php5/conf.d/cgi-fix-pathinfo.conf:
     file.managed:

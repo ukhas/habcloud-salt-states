@@ -4,12 +4,12 @@
     file.managed:
         - source: salt://nginx/php-fpm-pool.conf
         - defaults:
-            - name: {{ name }}
-            - user: {{ user }}
-            - max_servers: {{ max_servers }}
-            - start_servers: {{ start_servers }}
-            - min_spare: {{ min_spare }}
-            - max_spare: {{ max_spare }}
+            name: {{ name }}
+            user: {{ user }}
+            max_servers: {{ max_servers }}
+            start_servers: {{ start_servers }}
+            min_spare: {{ min_spare }}
+            max_spare: {{ max_spare }}
         - watch_in:
             - service: php5-fpm
 {% endmacro %}
