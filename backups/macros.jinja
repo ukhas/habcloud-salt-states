@@ -6,7 +6,7 @@
 "backup-{{ name }}":
   file.managed:
     - name: /root/backups/{{ name }}.sh
-    - mkdirs: true
+    - makedirs: true
     - dirmode: 700
     - user: root
     - mode: 700
