@@ -1,3 +1,4 @@
+// Don't forget to update apt_cache to_archive_mirrors acl!
 Unattended-Upgrade::Origins-Pattern {
         "o=Debian";
         "o=saltstack.com";
