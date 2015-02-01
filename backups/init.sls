@@ -32,7 +32,7 @@ backups-user:
 
 backups-import-key:
   cmd.wait:
-    - name: gpg --homedir /root/.gnupg --import /root/habhub_backups_pubkey.asc
+    - name: gpg --homedir /home/backups/.gnupg --import /home/backups/habhub_backups_pubkey.asc
     - user: backups
     - watch:
       - file: /home/backups/habhub_backups_pubkey.asc
