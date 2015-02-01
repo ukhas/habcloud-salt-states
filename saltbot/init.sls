@@ -55,7 +55,7 @@ saltbot-six-first:
 
 saltbot-reqs:
   pip.installed:
-    - requrements: /home/saltbot/saltbot/requirements.txt
+    - requirements: /home/saltbot/saltbot/requirements.txt
     - bin_env: /home/saltbot/venv
     - watch:
       - git: saltbot-code
