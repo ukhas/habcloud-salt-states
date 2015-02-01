@@ -15,7 +15,7 @@
     - context:
         name: {{ name }}
         user: {{ user }}
-        cmd: {{ cmd|yaml_encode }}
+        cmd: {{ cmd }}
   cron.present:
     - minute: random
     - hour: 3
