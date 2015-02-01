@@ -16,10 +16,10 @@ gnupg:
   pkg.installed
 
 backups-user:
-  group:
+  group.present:
     - name: backups
     - system: true
-  user:
+  user.present:
     - name: backups
     - gid_from_name: true
     - system: true
