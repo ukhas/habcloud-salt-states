@@ -15,18 +15,37 @@ s3cmd:
 gnupg:
   pkg.installed
 
-/root/habhub_backups_pubkey.asc:
+backups-user:
+  group:
+    name: backups
+    system: true
+  user:
+    name: backups
+    gid_from_name: true
+    system: true
+    home: /home/backups
+
+/home/backups/habhub_backups_pubkey.asc:
   file.managed:
     - source: salt://backups/habhub_backups_pubkey.asc
+    - user: backups
 
 backups-import-key:
   cmd.wait:
     - name: gpg --homedir /root/.gnupg --import /root/habhub_backups_pubkey.asc
+    - user: backups
     - watch:
-      - file: /root/habhub_backups_pubkey.asc
+      - file: /home/backups/habhub_backups_pubkey.asc
 
-/root/.s3cfg:
+/home/backups/.s3cfg:
   file.managed:
     - source: salt://backups/s3cfg
+    - user: backups
     - mode: 600
     - template: jinja
+
+/home/backups/backup.sh:
+  file.managed:
+    - source: salt://backups/backup.sh
+    - mode: 700
+    - user: backups
