@@ -57,6 +57,7 @@ saltbot-reqs:
   pip.installed:
     - requirements: /home/saltbot/saltbot/requirements.txt
     - bin_env: /home/saltbot/venv
+    - user: saltbot
     - watch:
       - git: saltbot-code
 
