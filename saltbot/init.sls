@@ -46,7 +46,12 @@ python-psycopg2:
 # Unfortunately this means six==1.1.0 is put here, but irc requires (through
 # jaraco modules) that six>=1.4.0 is installed; which means pip can't handle
 # doing everything with just one requirements file.
-# So we install six==1.9.0 first, then process the requirements file.
+# Having installed six with pip we can just "pip install ." inside the saltbot
+# directory. You'd think you could just python setup.py install, but this
+# causes the system site-packages to be placed before the venv site-packages
+# on sys.path, which means six 1.1.0 is loaded instead of 1.9.0, which would be
+# OK except it means six 1.9.0 keeps getting reinstalled and so these states
+# keep changing. Basically Python packaging has a lot to answer for.
 saltbot-six-first:
   pip.installed:
     - name: six==1.9.0
@@ -63,7 +68,7 @@ saltbot-reqs:
 
 saltbot-install:
   cmd.wait:
-    - name: /home/saltbot/venv/bin/python setup.py develop
+    - name: /home/saltbot/venv/bin/pip install .
     - user: saltbot
     - group: saltbot
     - cwd: /home/saltbot/saltbot
