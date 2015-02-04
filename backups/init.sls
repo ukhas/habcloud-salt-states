@@ -43,6 +43,7 @@ backups-import-key:
     - user: backups
     - mode: 600
     - template: jinja
+    - show_changes: false
 
 /home/backups/backup.sh:
   file.managed:

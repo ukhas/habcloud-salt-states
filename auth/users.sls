@@ -29,6 +29,7 @@ user-{{ user }}:
       - contents_pillar: auth:users:{{ user }}:ssh_keys
       - makedirs: true
       - dir_mode: 700
+      - show_changes: false
       - require:
           - user: {{ user }}
 {% endfor %}
