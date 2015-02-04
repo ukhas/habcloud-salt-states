@@ -9,6 +9,8 @@ misc-packages:
           - iftop
           - sysstat
           - netcat-openbsd
+          - pv
+          - tree
           - python-pip
           - python-virtualenv
 
