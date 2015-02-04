@@ -60,6 +60,10 @@ salt://ukhas/install_dokuwiki.sh:
     file.managed:
       - source: salt://ukhas/conf/mime.local.conf
 
+/srv/ukhas-dokuwiki/conf/plugins.local.php:
+    file.managed:
+      - contents: "<?php"
+
 {{ php_pool("ukhas-dokuwiki", user="ukhas-dokuwiki") }}
 
 /etc/nginx/conf.d/ukhas.conf:
