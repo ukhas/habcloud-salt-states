@@ -44,3 +44,9 @@ nginx:
     - mode: 644
     - makedirs: true
     - dir_mode: 755
+
+distro-nginx-sites:
+  file.absent:
+    - names:
+        - /etc/nginx/sites-available
+        - /etc/nginx/sites-enabled
