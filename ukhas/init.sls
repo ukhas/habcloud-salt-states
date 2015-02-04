@@ -24,6 +24,26 @@ salt://ukhas/install_dokuwiki.sh:
       - require:
           - group: ukhas-dokuwiki
 
+# create data and users.auth.php, and enforce their permissions,
+# but not their contents
+/srv/ukhas-data/data:
+    file.directory:
+      - user: ukhas-dokuwiki
+      - group: ukhas-dokuwiki
+      - dir_mode: 750
+      - require:
+          - user: ukhas-dokuwiki
+          - file: /srv/ukhas-data
+
+/srv/ukhas-data/users.auth.php:
+    file.managed:
+      - user: ukhas-dokuwiki
+      - group: ukhas-dokuwiki
+      - mode: 640
+      - require:
+          - user: ukhas-dokuwiki
+          - file: /srv/ukhas-data
+
 /srv/ukhas-dokuwiki/conf/acl.auth.php:
     file.managed:
       - source: salt://ukhas/conf/acl.auth.php
