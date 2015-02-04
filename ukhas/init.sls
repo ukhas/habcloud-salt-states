@@ -8,10 +8,11 @@ ukhas-dokuwiki:
     group.present: []
     user.present:
       - home: /srv/ukhas-dokuwiki
+      - createhome: false
       - system: true
       - gid_from_name: true
 
-salt://scratch/install_dokuwiki.sh:
+salt://ukhas/install_dokuwiki.sh:
     cmd.script:
       - creates: /srv/ukhas-dokuwiki
 
@@ -25,20 +26,20 @@ salt://scratch/install_dokuwiki.sh:
 
 /srv/ukhas-dokuwiki/conf/acl.auth.php:
     file.managed:
-      - source: salt://scratch/conf/acl.auth.php
+      - source: salt://ukhas/conf/acl.auth.php
 
 /srv/ukhas-dokuwiki/conf/local.php:
     file.managed:
-      - source: salt://scratch/conf/local.php
+      - source: salt://ukhas/conf/local.php
 
 /srv/ukhas-dokuwiki/conf/local.keys.php:
     file.managed:
-      - source: salt://scratch/conf/local.keys.php
+      - source: salt://ukhas/conf/local.keys.php
       - show_changes: false
 
 /srv/ukhas-dokuwiki/conf/mime.local.conf:
     file.managed:
-      - source: salt://scratch/conf/mime.local.conf
+      - source: salt://ukhas/conf/mime.local.conf
 
 {{ php_pool("ukhas-dokuwiki", user="ukhas-dokuwiki") }}
 
