@@ -31,6 +31,7 @@ python-psycopg2:
     - user: saltbot
     - group: saltbot
     - mode: 600
+    - show_diff: false
 
 # Create the venv. We would just put requirements: here, but see below.
 /home/saltbot/venv:
