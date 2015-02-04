@@ -54,7 +54,7 @@ salt://ukhas/install_dokuwiki.sh:
     file.managed:
       - source: salt://ukhas/conf/local.keys.php
       - template: jinja
-      - show_changes: false
+      - show_diff: false
 
 /srv/ukhas-dokuwiki/conf/mime.local.conf:
     file.managed:
