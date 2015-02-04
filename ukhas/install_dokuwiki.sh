@@ -13,4 +13,4 @@ $TAR -xf /tmp/dokuwiki-recaptcha.tgz -C /srv/ukhas-dokuwiki/lib/plugins/recaptch
 
 rm -rf /srv/ukhas-dokuwiki/data /srv/ukhas-dokuwiki/install.php
 ln -s /srv/ukhas-data/conf/users.auth.php /srv/ukhas-dokuwiki/conf
-ln -s /srv/ukhas-data/conf/data           /srv/ukhas-dokuwiki/
+ln -s /srv/ukhas-data/data                /srv/ukhas-dokuwiki/
