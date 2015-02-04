@@ -18,9 +18,7 @@ salt://ukhas/install_dokuwiki.sh:
 
 /srv/ukhas-data:
     file.directory:
-      - user: root
-      - group: ukhas-dokuwiki
-      - dir_mode: 750
+      - dir_mode: 755
       - require:
           - group: ukhas-dokuwiki
 
@@ -29,7 +27,7 @@ salt://ukhas/install_dokuwiki.sh:
 /srv/ukhas-data/data:
     file.directory:
       - user: ukhas-dokuwiki
-      - group: ukhas-dokuwiki
+      - group: sudo
       - dir_mode: 750
       - require:
           - user: ukhas-dokuwiki
@@ -38,7 +36,7 @@ salt://ukhas/install_dokuwiki.sh:
 /srv/ukhas-data/users.auth.php:
     file.managed:
       - user: ukhas-dokuwiki
-      - group: ukhas-dokuwiki
+      - group: sudo
       - mode: 640
       - require:
           - user: ukhas-dokuwiki
