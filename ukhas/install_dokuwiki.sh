@@ -12,5 +12,5 @@ mkdir /srv/ukhas-dokuwiki/lib/plugins/recaptcha
 $TAR -xf /tmp/dokuwiki-recaptcha.tgz -C /srv/ukhas-dokuwiki/lib/plugins/recaptcha --strip-components=1
 
 rm -rf /srv/ukhas-dokuwiki/data /srv/ukhas-dokuwiki/install.php
-ln -s /srv/ukhas-data/conf/users.auth.php /srv/ukhas-dokuwiki/conf
-ln -s /srv/ukhas-data/data                /srv/ukhas-dokuwiki/
+ln -s /srv/ukhas-data/users.auth.php /srv/ukhas-dokuwiki/conf
+ln -s /srv/ukhas-data/data           /srv/ukhas-dokuwiki/
