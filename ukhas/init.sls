@@ -1,0 +1,50 @@
+include:
+    - nginx
+    - nginx.php
+
+{% from "nginx/php-macros.jinja" import php_pool %}
+
+ukhas-dokuwiki:
+    group.present: []
+    user.present:
+      - home: /srv/ukhas-dokuwiki
+      - system: true
+      - gid_from_name: true
+
+salt://scratch/install_dokuwiki.sh:
+    cmd.script:
+      - creates: /srv/ukhas-dokuwiki
+
+/srv/ukhas-data:
+    file.directory:
+      - user: root
+      - group: ukhas-dokuwiki
+      - dir_mode: 750
+      - require:
+          - group: ukhas-dokuwiki
+
+/srv/ukhas-dokuwiki/conf/acl.auth.php:
+    file.managed:
+      - source: salt://scratch/conf/acl.auth.php
+
+/srv/ukhas-dokuwiki/conf/local.php:
+    file.managed:
+      - source: salt://scratch/conf/local.php
+
+/srv/ukhas-dokuwiki/conf/local.keys.php:
+    file.managed:
+      - source: salt://scratch/conf/local.keys.php
+      - show_changes: false
+
+/srv/ukhas-dokuwiki/conf/mime.local.conf:
+    file.managed:
+      - source: salt://scratch/conf/mime.local.conf
+
+{{ php_pool("ukhas-dokuwiki", user="ukhas-dokuwiki") }}
+
+/etc/nginx/conf.d/ukhas.conf:
+    file.managed:
+      - source: salt://ukhas/nginx-site.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx

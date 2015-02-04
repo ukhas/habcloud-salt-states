@@ -30,4 +30,4 @@ base:
 
     scratch.vm.habhub.org:
       - ntp
-      - scratch
+      - ukhas
