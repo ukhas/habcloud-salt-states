@@ -3,6 +3,7 @@ php5-fpm:
         - names:
             - php5-cli
             - php5-fpm
+            - php-apc
     service.running:
         - name: php5-fpm
         - reload: true
