@@ -9,6 +9,7 @@ varnish:
         - watch:
             - pkg: varnish
             - file: /etc/varnish/default.vcl
+            - file: /etc/default/varnish
 
 /etc/default/varnish:
     file.managed:
