@@ -1,0 +1,11 @@
+# Configuration file for varnish
+START=yes
+
+NFILES=131072   # ulimit -n
+MEMLOCK=82000   # ulimit -l
+
+DAEMON_OPTS="-a :{{ port }} \
+             -T localhost:6082 \
+             -f /etc/varnish/default.vcl \
+             -S /etc/varnish/secret \
+             -s malloc,256m"

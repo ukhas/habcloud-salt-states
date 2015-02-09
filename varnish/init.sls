@@ -10,6 +10,14 @@ varnish:
             - pkg: varnish
             - file: /etc/varnish/default.vcl
 
+/etc/default/varnish:
+    file.managed:
+        - source: salt://varnish/etc-default-varnish
+        - template: jinja
+        - defaults:
+            - port: 80
+            - memory: 256m
+
 /etc/varnish/default.vcl:
     file.managed:
         - source: salt://varnish/default.vcl
@@ -17,6 +25,10 @@ varnish:
 
 extend:
     /etc/nginx/listen_addresses:
+        file.managed:
+            - defaults:
+                  port: 2080
+    /etc/nginx/conf/catchall.conf
         file.managed:
             - defaults:
                   port: 2080
