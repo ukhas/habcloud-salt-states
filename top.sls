@@ -29,5 +29,6 @@ base:
       - adamscratch
 
     scratch.vm.habhub.org:
+      - varnish
       - ntp
       - ukhas
