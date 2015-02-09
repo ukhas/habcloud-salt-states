@@ -11,7 +11,7 @@ $conf['plugin']['recaptcha']['lang'] = 'en';
 $conf['plugin']['recaptcha']['editprotect'] = 0;
 $conf['mailfrom'] = 'dokuwiki@ukhas.org.uk';
 
-define("NOSESSION", true);
+define("DOKU_SESSION_NAME", "DOKUWIKI_SESSION");
 define("DOKU_COOKIE", "DOKUWIKI_AUTH");
 $conf['breadcrumbs'] = 0;
 $conf['youarehere'] = 0;
