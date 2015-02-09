@@ -28,7 +28,7 @@ extend:
         file.managed:
             - defaults:
                   port: 2080
-    /etc/nginx/conf/catchall.conf
+    /etc/nginx/conf/catchall.conf:
         file.managed:
             - defaults:
                   port: 2080
