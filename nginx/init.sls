@@ -16,6 +16,8 @@ nginx:
             - pkg: nginx
             - file: /etc/nginx/nginx.conf
             - file: /etc/nginx/conf.d/catchall.conf
+            - file: /etc/nginx/proxy_params
+            - file: /etc/nginx/listen_addresses
 
 /etc/nginx/nginx.conf:
     file.managed:
@@ -30,6 +32,13 @@ nginx:
 /etc/nginx/proxy_params:
     file.managed:
         - source: salt://nginx/proxy_params
+
+/etc/nginx/listen_addresses:
+    file.managed:
+        - source: salt://nginx/listen_addresses
+        - template: jinja
+        - defaults:
+              port: 80
 
 /srv/nginx-common/robots.txt:
   file.managed:
