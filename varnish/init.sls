@@ -15,8 +15,8 @@ varnish:
         - source: salt://varnish/etc-default-varnish
         - template: jinja
         - defaults:
-            - port: 80
-            - memory: 256m
+            port: 80
+            memory: 256m
 
 /etc/varnish/default.vcl:
     file.managed:
