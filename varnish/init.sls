@@ -2,13 +2,22 @@ varnish:
     pkg:
         - installed
     service.running:
-        - reload: true
         - enable: true
+        - reload: true
         - require:
             - service: nginx
+            - pkg: varnish
+            - file: /etc/default/varnish
+        - watch:
+            - file: /etc/varnish/default.vcl
+
+varnish-restart:
+    service.running:
+        - name: varnish
+        - enable: true
+        - reload: false
         - watch:
             - pkg: varnish
-            - file: /etc/varnish/default.vcl
             - file: /etc/default/varnish
 
 /etc/default/varnish:
