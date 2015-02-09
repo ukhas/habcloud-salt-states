@@ -13,6 +13,10 @@ misc-packages:
           - tree
           - python-pip
           - python-virtualenv
+          - build-essential
+          - strace
+          - ltrace
+          - gdb
 
 # Unnecessary daemons listening on 0.0.0.0
 purge-useless-nfs:
