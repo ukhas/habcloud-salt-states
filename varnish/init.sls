@@ -38,7 +38,11 @@ extend:
         file.managed:
             - defaults:
                   port: 2080
+                  use_x_forwarded:
+                      from: 127.0.0.1
     /etc/nginx/conf.d/catchall.conf:
         file.managed:
             - defaults:
                   port: 2080
+                  use_x_forwarded:
+                      from: 127.0.0.1

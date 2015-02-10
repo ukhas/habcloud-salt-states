@@ -1,2 +1,2 @@
-listen {{ port }};
-listen [::]:{{ port }};
+{% from "nginx/macros.jinja" import listen_addresses %}
+{{ listen_addresses(port=port, default_server=False, use_x_forwarded=use_x_forwarded) }}
