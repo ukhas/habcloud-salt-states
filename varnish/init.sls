@@ -1,3 +1,5 @@
+{% from "nginx/macros.jinja" import set_listen_addresses %}
+
 varnish:
     pkg:
         - installed
@@ -33,16 +35,4 @@ varnish-restart:
         - source: salt://varnish/default.vcl
         - template: jinja
 
-extend:
-    /etc/nginx/listen_addresses:
-        file.managed:
-            - defaults:
-                  port: 2080
-                  use_x_forwarded:
-                      from: 127.0.0.1
-    /etc/nginx/conf.d/catchall.conf:
-        file.managed:
-            - defaults:
-                  port: 2080
-                  use_x_forwarded:
-                      from: 127.0.0.1
+{{ set_listen_addresses(port=2080, use_x_forwarded={'from': '127.0.0.1'}) }}
