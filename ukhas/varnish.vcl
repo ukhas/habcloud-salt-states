@@ -1,4 +1,4 @@
-{% extends "varnish/deafult.vcl" %}
+{% extends "varnish/default.vcl" %}
 
 {% macro always_cache_condition() %}
     (req.url ~ "^(/_media/|/lib/exe/(js|css).php)")
