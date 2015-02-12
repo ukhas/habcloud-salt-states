@@ -1,16 +1,16 @@
 {% extends "varnish/deafult.vcl" %}
 
-{% macro always_cache_condition %}
+{% macro always_cache_condition() %}
     (req.url ~ "^(/_media/|/lib/exe/(js|css).php)")
 {% endmacro %}
 
-{% macro authed_condition %}
+{% macro authed_condition() %}
     (    req.http.Authorization
      || (req.http.cookie !~ "DOKUWIKI_AUTH") )
 {% endmacro %}
 
 {% block vcl_recv_inner %}
-    if ({{ always_cache_condition }}) {
+    if ({{ always_cache_condition() }}) {
         /* If it's a /_media/ URL, strip all cookies to make it an
            unauthed request (if it was); it then should be safe to
            cache & return (since e.g., login reqs are done via POST) */
@@ -18,7 +18,7 @@
         remove req.http.cookie;
         return (lookup);
         /* XXX: does this produce lots of useless PHP sessions? */
-    } else if ({{ authed_condition }}) {
+    } else if ({{ authed_condition() }}) {
         /* User is logged in. Response will contain references to the user,
            could contain, 'Set-Cookie' headers that log the user out (this
            will even happen on a GET request...), ... */
@@ -32,7 +32,7 @@
 {% endblock %}
 
 sub vcl_fetch {
-    if (!{{ always_cache_condition }} && {{ authed_condition }}) {
+    if (!{{ always_cache_condition() }} && {{ authed_condition() }}) {
         error "500" "VCL assertion failure";
     } else {
         set beresp.ttl = 300s;
