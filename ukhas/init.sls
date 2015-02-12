@@ -72,3 +72,8 @@ salt://ukhas/install_dokuwiki.sh:
       - template: jinja
       - watch_in:
           - service: nginx
+
+extend:
+    /etc/varnish/default.vcl:
+        file.managed:
+            - source: salt://ukhas/varnish.vcl
