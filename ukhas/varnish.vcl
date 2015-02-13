@@ -36,10 +36,11 @@ sub vcl_fetch {
     if ({{ always_cache_condition() }} || !{{ authed_condition() }}) {
         set beresp.ttl = 300s;
         remove beresp.http.Set-Cookie;
+        return (deliver);
+    } else {
+        /* I don't think this is necessary, since we should be in pass mode. */
+        set beresp.ttl = 0s;
+        return (hit_for_pass);
     }
-
-    /* We'll be in pass mode if vcl_recv decided, so it won't be inserted
-       into the cache. */
-    return (deliver);
 }
 {% endblock %}
