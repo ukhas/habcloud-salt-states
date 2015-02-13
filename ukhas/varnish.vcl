@@ -34,7 +34,7 @@
 {% block vcl_fetch %}
 sub vcl_fetch {
     if (!{{ always_cache_condition() }} && {{ authed_condition() }}) {
-        error "500" "VCL assertion failure";
+        error 500 "VCL assertion failure";
     } else {
         set beresp.ttl = 300s;
         remove beresp.http.Set-Cookie;
