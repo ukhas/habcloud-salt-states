@@ -33,12 +33,13 @@
 
 {% block vcl_fetch %}
 sub vcl_fetch {
-    if (!{{ always_cache_condition() }} && {{ authed_condition() }}) {
-        error 500 "VCL assertion failure";
-    } else {
+    if ({{ always_cache_condition() }} || !{{ authed_condition() }}) {
         set beresp.ttl = 300s;
         remove beresp.http.Set-Cookie;
-        return (deliver);
     }
+
+    /* We'll be in pass mode if vcl_recv decided, so it won't be inserted
+       into the cache. */
+    return (deliver);
 }
 {% endblock %}
