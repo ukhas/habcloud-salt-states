@@ -11,7 +11,15 @@ varnish:
             - pkg: varnish
             - file: /etc/default/varnish
         - watch:
+            - file: /etc/init.d/varnish
             - file: /etc/varnish/default.vcl
+
+/etc/init.d/varnish:
+    file.comment:
+        # the last line prevents proper error-exits on config fail
+        - regex: "^exit 0$"
+        - require:
+            - pkg: varnish
 
 varnish-restart:
     service.running:
