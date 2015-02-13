@@ -6,7 +6,7 @@
 
 {% macro authed_condition() %}
     (    req.http.Authorization
-     || (req.http.cookie !~ "DOKUWIKI_AUTH") )
+     || (req.http.cookie ~ "DOKUWIKI_AUTH") )
 {% endmacro %}
 
 {% block vcl_recv_inner %}
