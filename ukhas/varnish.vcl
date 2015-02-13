@@ -31,6 +31,7 @@
     }
 {% endblock %}
 
+{% block vcl_fetch %}
 sub vcl_fetch {
     if (!{{ always_cache_condition() }} && {{ authed_condition() }}) {
         error "500" "VCL assertion failure";
@@ -40,3 +41,4 @@ sub vcl_fetch {
         return (deliver);
     }
 }
+{% endblock %}

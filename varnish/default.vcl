@@ -35,3 +35,7 @@ sub vcl_recv {
     {% endblock %}
 }
 {% endblock %}
+
+{% block vcl_fetch %}
+{# Use default vcl_fetch #}
+{% endblock %}
