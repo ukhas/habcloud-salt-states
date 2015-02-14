@@ -6,7 +6,7 @@ include:
 sentry_deps:
   pkg.installed:
     - names:
-      - redis
+      - redis-server
       - libxslt1-dev
       - libxml2-dev
       - python-psycopg2
@@ -31,10 +31,9 @@ sentry:
 
 sentry_code:
   pip.installed:
-    - name: "sentry[postgres]"
+    - name: sentry
     - bin_env: /home/sentry/venv
     - user: sentry
-    - group: sentry
 
 sentry_conf:
   file.managed:
@@ -63,7 +62,7 @@ sentry_nginx:
 sentry-workers:
   file.managed:
     - name: /etc/supervisor/conf.d/sentry-workers.conf
-    - source: salt://monitoring/salt-workers-supervisord.conf
+    - source: salt://monitoring/sentry-workers-supervisord.conf
     - watch_in:
       - service: supervisor
   supervisord.running:
