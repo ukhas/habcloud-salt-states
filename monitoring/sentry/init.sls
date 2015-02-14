@@ -55,7 +55,6 @@ sentry_conf:
 
 {% from "nginx/macros.jinja" import deploy_ssl_files, set_listen_addresses %}
 {{ deploy_ssl_files("sentry.habhub.org") }}
-{{ set_listen_addresses(ssl={"certificate": "sentry.habhub.org"}) }}
 
 sentry_nginx:
   file.managed:
