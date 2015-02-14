@@ -39,12 +39,6 @@ sentry_code:
     - wait:
       - pip: sentry_code
 
-sentry_irc:
-  pip.installed:
-    - name: sentry-irc
-    - bin_env: /home/sentry/venv
-    - user: sentry
-
 sentry_conf:
   file.managed:
     - name: /home/sentry/.sentry/sentry.conf.py
