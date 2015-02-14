@@ -97,9 +97,14 @@ supervisor-saltbot:
   supervisord.running:
     - name: saltbot
     - watch:
+      - file: /etc/supervisor/conf.d/saltbot.conf
+
+saltbot-sighup:
+  cmd.wait:
+    - name: "killall -SIGHUP saltbot"
+    - watch:
       - git: saltbot-code
       - file: /home/saltbot/saltbot.yml
-      - file: /etc/supervisor/conf.d/saltbot.conf
 
 /etc/nginx/conf.d/saltbot.conf:
   file.managed:
