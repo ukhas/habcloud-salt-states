@@ -64,6 +64,6 @@ sentry-workers:
     - source: salt://monitoring/salt-workers-supervisord.conf
     - watch_in:
       - service: supervisor
-  supervisord.running: []
+  supervisord.running:
     - require:
       - file: sentry-workers
