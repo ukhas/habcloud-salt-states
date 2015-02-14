@@ -52,10 +52,14 @@ sentry_conf:
       - supervisord: sentry-web
       - supervisord: sentry-workers
 
+
+{% from "nginx/macros.jinja" import ssl %}
+{{ deploy_ssl_files("sentry.habhub.org") }}
+
 sentry_nginx:
   file.managed:
     - name: /etc/nginx/conf.d/sentry.habhub.org.conf
-    - source: salt://monitoring/sentry-nginx.conf
+    - source: salt://monitoring/sentry/nginx-site.conf
     - template: jinja
     - watch_in:
       - service: nginx
@@ -70,7 +74,7 @@ sentry_nginx:
 sentry-workers:
   file.managed:
     - name: /etc/supervisor/conf.d/sentry-workers.conf
-    - source: salt://monitoring/sentry-workers-supervisord.conf
+    - source: salt://monitoring/sentry/sentry-workers-supervisord.conf
     - watch_in:
       - service: supervisor
   supervisord.running:
