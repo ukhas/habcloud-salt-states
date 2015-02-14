@@ -43,4 +43,4 @@ varnish-restart:
         - source: salt://varnish/default.vcl
         - template: jinja
 
-{{ set_listen_addresses(port=2080, use_x_forwarded=True) }}
+{{ set_listen_addresses(http_port=2080, use_x_forwarded=True) }}
