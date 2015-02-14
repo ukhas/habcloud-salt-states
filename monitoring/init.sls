@@ -1,3 +1,4 @@
 include:
   - nginx
+  - backups
   - .sentry
