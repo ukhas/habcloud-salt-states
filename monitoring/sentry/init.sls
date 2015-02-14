@@ -53,7 +53,7 @@ sentry_conf:
       - supervisord: sentry-workers
 
 
-{% from "nginx/macros.jinja" import ssl %}
+{% from "nginx/macros.jinja" import deploy_ssl_files %}
 {{ deploy_ssl_files("sentry.habhub.org") }}
 
 sentry_nginx:
