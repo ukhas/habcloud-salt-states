@@ -76,3 +76,6 @@ sentry-workers:
   supervisord.running:
     - require:
       - file: sentry-workers
+
+{% from "backups/macros.jinja" import backup %}
+{{ backup("sentry-db", "sentry", "pg_dump sentry") }}
