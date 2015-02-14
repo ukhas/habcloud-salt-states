@@ -1,8 +1,3 @@
-{% from "backups/macros.jinja" import backup %}
-{{ backup("test_backup",
-          "adam",
-          "wget -q -O- \"http://pastie.org/pastes/9872384/download\"") }}
-
 include:
   - postgres.9_1
 
