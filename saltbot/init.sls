@@ -69,7 +69,7 @@ saltbot-reqs:
 
 saltbot-install:
   cmd.wait:
-    - name: /home/saltbot/venv/bin/pip install .
+    - name: /home/saltbot/venv/bin/pip install -e .
     - user: saltbot
     - group: saltbot
     - cwd: /home/saltbot/saltbot
