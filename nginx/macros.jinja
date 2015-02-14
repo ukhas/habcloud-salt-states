@@ -43,7 +43,7 @@ listen [::]:{{ port -}}
 {% if use_x_forwarded is sameas True %}
     {% set ufw_yaml = 'true' %}
 {% elif use_x_forwarded is sameas None %}
-    {% set ufw_yaml = 'none' %}
+    {% set ufw_yaml = 'null' %}
 {% else %}
     {% set ufw_yaml = use_x_forwarded|string %} {# ditto #}
 {% endif %}
