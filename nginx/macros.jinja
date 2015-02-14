@@ -23,10 +23,15 @@ listen [::]:{{ port -}}
 {% endmacro %}
 
 {# This is both horrific and hilarious >_> #}
-{# For use in a state file, to modify the nginx states #}
+{# For use in a state file, to modify the nginx states
+
    http_port : int
    ssl : { port : int, certificate : string } | None
    use_x_forwarded : True | { from : string } | None
+
+   The certificate specified in `ssl` is the certificate used in the catch-all
+   server; you must also specify certificates in your nginx servers (see
+   `site-template`).
 #}
 {% macro set_listen_addresses(http_port=80, ssl=None, use_x_forwarded=None) %}
 
