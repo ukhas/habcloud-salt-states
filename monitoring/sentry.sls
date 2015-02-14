@@ -38,11 +38,15 @@ sentry_code:
 sentry_conf:
   file.managed:
     - name: /home/sentry/.sentry/sentry.conf.py
-    - source: salt://monitoring/sentry.conf.py
+    - contents_pillar: monitoring.sentry_conf
     - makedirs: true
     - user: sentry
     - group: sentry
     - mode: 600
+    - show_diff: false
+    - watch_in:
+      - supervisord: sentry-web
+      - supervisord: sentry-workers
 
 sentry_nginx:
   file.managed:
@@ -54,7 +58,7 @@ sentry_nginx:
 
 # supervisor+gunicorn
 {% from "gunicorn/macros.jinja" import gunicorn %}
-{{ gunicorn(name="sentry", user="sentry", venv="/home/sentry/venv",
+{{ gunicorn(name="sentry-web", user="sentry", venv="/home/sentry/venv",
             dir="/home/sentry", app="sentry.wsgi",
             workers=2) }}
 
