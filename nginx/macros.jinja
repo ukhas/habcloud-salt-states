@@ -25,3 +25,21 @@ extend:
                   {% endif %}
     {% endfor %}
 {% endmacro %}
+
+{# Short macro to grab SSL key and cert files from Pillar #}
+{% macro depoy_ssl_files("hostname") %}
+/etc/ssl/private/{{ hostname }}.crt:
+  file.managed:
+    - show_diff: false
+    - mode: 600
+    - contents_pillar: ssl:{{ hostname|replace('.', '_') }}:cert
+    - watch_in:
+      - service: nginx
+/etc/ssl/private/{{ hostname }}.key:
+  file.managed:
+    - show_diff: false
+    - mode: 600
+    - contents_pillar: ssl:{{ hostname|replace('.', '_') }}:key
+    - watch_in:
+      - service: nginx
+{% endmacro %}

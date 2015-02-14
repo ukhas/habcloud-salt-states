@@ -36,6 +36,10 @@ nginx:
         - defaults:
               port: 80
 
+/etc/nginx/dhparam.pem:
+    file.managed:
+        - source: salt://nginx/dhparam.pem
+
 /etc/nginx/conf.d/catchall.conf:
     file.managed:
         - source: salt://nginx/site-catchall.conf
