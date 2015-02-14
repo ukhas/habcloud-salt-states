@@ -22,19 +22,19 @@ real_ip_header    X-Forwarded-For;
 {# For use in a state file, to modify the nginx states #}
    http_port : int
    ssl : { certificate : string } | None
-   use_x_forwarded : { from : string } | None
+   use_x_forwarded : True | { from : string } | None
 #}
 {% macro set_listen_addresses(http_port=80, ssl=None, use_x_forwarded=None) %}
-{% set ssl =
-    if ssl is sameas None
-    then 'null'
-    else '{certificate: ' + ssl.certificate + '}'
-%}
-{% set ufw =
-    if use_x_forwarded is sameas True
-    then {"from": "127.0.0.1"}
-    else use_x_forwarded
-%}
+{% if ssl is sameas None %}
+    {% set ssl_yaml = 'null' %}
+{% else %}
+    {% set ssl_yaml = '{certificate: ' + ssl.certificate + '}' %}
+{% endif %}
+{% if use_x_forwarded is sameas True %}
+    {% set ufw = {"from": "127.0.0.1"} %}
+{% else %}
+    {% set ufw = use_x_forwarded %}
+{% endif %}
 
 extend:
     /etc/nginx/conf.d/catchall.conf:
@@ -42,14 +42,14 @@ extend:
             - defaults:
                   http_port: {{ port }}
                   ssl: {{ ssl }}
-                  use_x_forwarded: {from: {{ use_x_forwarded.from }}}
+                  use_x_forwarded: {from: {{ ufw.from }}}
 
     /etc/nginx/listen_addresses:
         file.managed:
             - defaults:
                   port: {{ http_port }}
                   ssl: false
-                  use_x_forwarded: {from: {{ use_x_forwarded.from }}}
+                  use_x_forwarded: {from: {{ ufw.from }}}
 
     {% if ssl %}
     /etc/nginx/listen_addresses_ssl:
@@ -57,7 +57,7 @@ extend:
             - defaults:
                   port: {{ ssl.port }}
                   ssl: true
-                  use_x_forwarded: {from: {{ use_x_forwarded.from }}}
+                  use_x_forwarded: {from: {{ ufw.from }}}
     {% endif %}
 {% endmacro %}
 
