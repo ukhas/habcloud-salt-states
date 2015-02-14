@@ -1,5 +1,7 @@
 include:
   - postgres.9_1
+  - nginx
+  - supervisor
 
 sentry_deps:
   pkg.installed:
