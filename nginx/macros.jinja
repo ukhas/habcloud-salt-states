@@ -63,14 +63,14 @@ extend:
                   ssl: false
                   use_x_forwarded: {{ ufw_yaml }}
 
-    {% if ssl %}
-    /etc/nginx/listen_addresses_ssl:
-        file.managed:
-            - defaults:
-                  port: {{ ssl.port }}
-                  ssl: true
-                  use_x_forwarded: {{ ufw_yaml }}
-    {% endif %}
+{% if ssl %}
+/etc/nginx/listen_addresses_ssl:
+    file.managed:
+        - defaults:
+              port: {{ ssl.port }}
+              ssl: true
+              use_x_forwarded: {{ ufw_yaml }}
+{% endif %}
 {% endmacro %}
 
 {# Short macro to grab SSL key and cert files from Pillar #}
