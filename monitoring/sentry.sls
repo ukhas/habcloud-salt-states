@@ -1,5 +1,5 @@
 include:
-  postgres.9_1
+  - postgres.9_1
 
 sentry_deps:
   pkg.installed:
