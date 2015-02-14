@@ -27,7 +27,7 @@ extend:
 {% endmacro %}
 
 {# Short macro to grab SSL key and cert files from Pillar #}
-{% macro depoy_ssl_files(hostname) %}
+{% macro deploy_ssl_files(hostname) %}
 /etc/ssl/private/{{ hostname }}.crt:
   file.managed:
     - show_diff: false
