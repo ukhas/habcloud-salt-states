@@ -2,14 +2,6 @@ include:
     - nginx
     - .dl_fldigi_version_check
 
-extend:
-    nginx:
-        service:
-            - watch:
-                - file: /etc/nginx/conf.d/habhub.org.conf
-                - git: habhub-homepage
-                - git: cusf-burst-calc
-
 /etc/nginx/conf.d/habhub.org.conf:
     file.managed:
         - source: salt://habhub/nginx-site.conf
@@ -25,6 +17,8 @@ habhub-homepage:
         - rev: master
         - always_fetch: true
         - submodules: true
+        - watch_in:
+          - service: nginx
 
 cusf-burst-calc:
     git.latest:
@@ -34,3 +28,5 @@ cusf-burst-calc:
         - rev: master
         - always_fetch: true
         - submodules: true
+        - watch_in:
+          - service: nginx

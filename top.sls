@@ -32,3 +32,6 @@ base:
       - varnish
       - ntp
       - ukhas
+
+    monitoring.vm.habhub.org:
+      - monitoring

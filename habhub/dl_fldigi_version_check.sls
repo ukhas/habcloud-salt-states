@@ -8,8 +8,6 @@
 include:
   - supervisor
 
-{% from "gunicorn/macros.jinja" import gunicorn %}
-
 # dl-fldigi version check user
 dfvc:
   group.present: []
@@ -33,7 +31,6 @@ dl-fldigi-code:
 # create venv
 /home/dfvc/venv:
   virtualenv.managed:
-    - no_site_packages: true
     - distribute: true
     - user: dfvc
     - requirements: /home/dfvc/dl-fldigi/update_server/requirements.txt
@@ -41,6 +38,7 @@ dl-fldigi-code:
       - git: dl-fldigi-code
 
 # supervisor+gunicorn
+{% from "gunicorn/macros.jinja" import gunicorn %}
 {{ gunicorn(name="dfvc", user="dfvc", venv="/home/dfvc/venv",
             dir="/home/dfvc/dl-fldigi/update_server", app="app:app",
             workers=2) }}
