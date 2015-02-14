@@ -36,7 +36,7 @@ sentry_code:
 
 sentry_conf:
   file.managed:
-    - name: /home/sentry/.sentry/sentry.conf.py:
+    - name: /home/sentry/.sentry/sentry.conf.py
     - source: salt://monitoring/sentry.conf.py
     - makedirs: true
     - user: sentry
@@ -45,7 +45,7 @@ sentry_conf:
 
 sentry_nginx:
   file.managed:
-    - name: /etc/nginx/conf.d/sentry.habhub.org.conf:
+    - name: /etc/nginx/conf.d/sentry.habhub.org.conf
     - source: salt://monitoring/sentry-nginx.conf
     - template: jinja
     - watch_in:
@@ -60,7 +60,7 @@ sentry_nginx:
 # queue workers supervisord
 sentry-workers:
   file.managed:
-    - name: /etc/supervisor/conf.d/sentry-workers.conf:
+    - name: /etc/supervisor/conf.d/sentry-workers.conf
     - source: salt://monitoring/salt-workers-supervisord.conf
     - watch_in:
       - service: supervisor
