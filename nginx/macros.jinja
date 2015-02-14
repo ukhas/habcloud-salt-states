@@ -71,6 +71,8 @@ extend:
 {% if ssl %}
 /etc/nginx/listen_addresses_ssl:
     file.managed:
+        - source: salt://nginx/listen_addresses
+        - template: jinja
         - defaults:
               port: {{ ssl.port }}
               ssl: true
