@@ -34,11 +34,15 @@ sentry_code:
     - name: sentry
     - bin_env: /home/sentry/venv
     - user: sentry
+  cmd.wait:
+    - name: /home/sentry/venv/bin/sentry upgrade
+    - wait:
+      - pip: sentry_code
 
 sentry_conf:
   file.managed:
     - name: /home/sentry/.sentry/sentry.conf.py
-    - contents_pillar: monitoring.sentry_conf
+    - contents_pillar: "monitoring:sentry_conf"
     - makedirs: true
     - user: sentry
     - group: sentry
