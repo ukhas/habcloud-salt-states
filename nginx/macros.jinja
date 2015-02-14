@@ -77,6 +77,8 @@ extend:
               port: {{ ssl.port }}
               ssl: true
               use_x_forwarded: {{ ufw_yaml }}
+        - watch_in:
+            - service: nginx
 {% endif %}
 {% endmacro %}
 
