@@ -37,14 +37,6 @@ nginx:
               port: 80
               ssl: false
 
-/etc/nginx/listen_addresses_ssl:
-    file.managed:
-        - source: salt://nginx/listen_addresses
-        - template: jinja
-        - defaults:
-              port: 443
-              ssl: true
-
 /etc/nginx/dhparam.pem:
     file.managed:
         - source: salt://nginx/dhparam.pem

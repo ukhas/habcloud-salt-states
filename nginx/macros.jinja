@@ -30,18 +30,22 @@ listen [::]:{{ port -}}
 #}
 {% macro set_listen_addresses(http_port=80, ssl=None, use_x_forwarded=None) %}
 
-{# See issue#11 #}
+{% if ssl and ssl.port is not defined %}
+    {% set ssl = {"port": 443, "certificate": ssl.certificate} %}
+{% endif %}
+
+{# See issue#11. This is really really unpleasant. #}
 {% if ssl is sameas None %}
     {% set ssl_yaml = 'null' %}
 {% else %}
-    {% set ssl_yaml = '{certificate: ' + ssl.certificate + '}' %}
+    {% set ssl_yaml = ssl|string %} {# fragile, but works #}
 {% endif %}
 {% if use_x_forwarded is sameas True %}
     {% set ufw_yaml = 'true' %}
 {% elif use_x_forwarded is sameas None %}
     {% set ufw_yaml = 'none' %}
 {% else %}
-    {% set ufw_yaml = '{from: ' + use_x_forwarded.from + '}' %}
+    {% set ufw_yaml = use_x_forwarded|string %} {# ditto #}
 {% endif %}
 
 extend:
