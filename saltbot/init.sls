@@ -59,6 +59,12 @@ saltbot-six-first:
     - user: saltbot
     - bin_env: /home/saltbot/venv
 
+saltbot-raven:
+  pip.installed:
+    - name: "raven[flask]"
+    - user: saltbot
+    - bin_env: /home/saltbot/venv
+
 saltbot-reqs:
   pip.installed:
     - requirements: /home/saltbot/saltbot/requirements.txt
