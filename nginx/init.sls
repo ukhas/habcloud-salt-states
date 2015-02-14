@@ -35,6 +35,15 @@ nginx:
         - template: jinja
         - defaults:
               port: 80
+              ssl: false
+
+/etc/nginx/listen_addresses_ssl:
+    file.managed:
+        - source: salt://nginx/listen_addresses
+        - template: jinja
+        - defaults:
+              port: 443
+              ssl: true
 
 /etc/nginx/dhparam.pem:
     file.managed:
@@ -45,7 +54,8 @@ nginx:
         - source: salt://nginx/site-catchall.conf
         - template: jinja
         - defaults:
-              port: 80
+              http_port: 80
+              ssl: null
 
 /srv/nginx-common/robots.txt:
   file.managed:
