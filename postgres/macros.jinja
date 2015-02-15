@@ -3,9 +3,7 @@
 {% if from_upstream %}
 postgresql_repo:
   pkgrepo.managed:
-    - humanname: postgresql stable
     - name: deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main
-    - dist: wheezy-pgdg
     - file: /etc/apt/sources.list.d/postgresql.list
     - key_url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
 {% endif %}

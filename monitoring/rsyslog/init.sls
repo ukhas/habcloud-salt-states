@@ -1,8 +1,6 @@
 rsyslog_repo:
   pkgrepo.managed:
-    - humanname: rsyslog stable
-    - name: deb http://debian.adiscon.com/v8-stable wheezy
-    - dist: wheezy
+    - name: deb http://debian.adiscon.com/v8-stable wheezy/
     - file: /etc/apt/sources.list.d/rsyslog.list
     - keyid: AEF0CF8E
     - keyserver: keys.gnupg.net
