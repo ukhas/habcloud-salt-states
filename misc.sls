@@ -17,6 +17,7 @@ misc-packages:
           - strace
           - ltrace
           - gdb
+          - rsyslog-relp
 
 # Unnecessary daemons listening on 0.0.0.0
 purge-useless-nfs:

@@ -2,6 +2,7 @@ include:
   - nginx
   - backups
   - .sentry
+  - .rsyslog
 
 {% from "nginx/macros.jinja" import deploy_ssl_files, set_listen_addresses %}
 {{ deploy_ssl_files("monitoring.vm.habhub.org") }}
