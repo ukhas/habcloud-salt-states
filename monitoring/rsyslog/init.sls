@@ -13,6 +13,5 @@ rsyslog_pkgs:
       - rsyslog
       - rsyslog-relp
       - rsyslog-elasticsearch
-    - require: pkgrepo: rsyslog_repo
-
-
+    - require:
+      - pkgrepo: rsyslog_repo
