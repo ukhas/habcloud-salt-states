@@ -52,7 +52,7 @@ kibana-nginx-auth-basic:
   file.managed:
     - name: /etc/nginx/kibana_auth_basic
     - show_diff: false
-    - contents_pillar: monitoring.kibana_auth_basic
+    - contents_pillar: "monitoring:kibana_auth_basic"
 
 kibana-nginx:
   file.managed:
