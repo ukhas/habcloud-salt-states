@@ -41,6 +41,9 @@ kibana_supervisord:
   supervisord.running:
     - name: kibana
 
+{% from "nginx/macros.jinja" import deploy_ssl_files %}
+{{ deploy_ssl_files("kibana.habhub.org") }}
+
 kibana-nginx-auth-basic:
   file.managed:
     - name: /etc/nginx/kibana_auth_basic
