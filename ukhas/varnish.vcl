@@ -6,6 +6,7 @@
 
 {% macro authed_condition() %}
     (    req.http.Authorization
+     || 
      || (req.http.cookie ~ "DOKUWIKI_AUTH") )
 {% endmacro %}
 
@@ -33,13 +34,19 @@
 
 {% block vcl_fetch %}
 sub vcl_fetch {
-    if ({{ always_cache_condition() }} || !{{ authed_condition() }}) {
+    if (req.request != "GET" && req.request != "HEAD") {
+        /* I don't think setting the TTL is necessary,
+           since we should be in pass mode.
+           This block /is/ necessary, or we delete Set-Cookie from
+           responses to POSTs. */
+        set beresp.ttl = 0s;
+        return (hit_for_pass);
+    } else if ({{ always_cache_condition() }} || !{{ authed_condition() }}) {
         set beresp.ttl = 300s;
         remove beresp.http.Set-Cookie;
         return (deliver);
     } else {
-        /* I don't think this is necessary, since we should be in pass mode. */
-        set beresp.ttl = 0s;
+        set beresp.ttl = 0s;    /* ditto */
         return (hit_for_pass);
     }
 }

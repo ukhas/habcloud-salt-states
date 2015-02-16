@@ -21,7 +21,7 @@ sub vcl_recv {
         return (pipe);
     }
 
-    # Only consider caching GET/HEAD
+    /* Only consider caching GET/HEAD */
     if (req.request != "GET" && req.request != "HEAD") {
         return (pass);
     }
