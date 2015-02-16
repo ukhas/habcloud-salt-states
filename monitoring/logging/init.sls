@@ -21,6 +21,9 @@ elasticsearch_repo:
     - keyid: D88E42B4
     - keyserver: pgp.mit.edu
 
+openjdk-7-jre-headless:
+  pkg.installed: []
+
 elasticsearch:
   pkg.installed:
     - require:
