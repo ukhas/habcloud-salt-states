@@ -14,12 +14,11 @@ kibana:
 kibana_download:
   archive.extracted:
     - name: /home/kibana
+    - user: kibana
     - source: https://download.elasticsearch.org/kibana/kibana/{{ kibana_version }}.tar.gz
     - source_hash: sha256=212307c5b4f493a7118dcab8fc61fe7548f0c0537c0c6354f00d7e8e5e376ed0
     - archive_format: tar
-    - archive_user: kibana
     - if_missing: /home/kibana/{{ kibana_version }}
-    - tar_options: z
     - require:
       - user: kibana
 
