@@ -3,6 +3,6 @@ rsyslog:
 
 /etc/rsyslog.d/habcloud-client.conf:
   file.managed:
-    - source: salt://monitoring/clients/rsyslog-client.conf
+    - source: salt://monitoring/client/rsyslog-client.conf
     - watch_in:
       - service: rsyslog

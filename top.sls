@@ -5,7 +5,6 @@ base:
       - auth.ssh
       - auth.users
       - apt_cache.client
-      - monitoring.client
 
     'ceto.habhub.org,phorcys.habhub.org':
       - match: list
@@ -18,6 +17,10 @@ base:
     '* and not support.vm.habhub.org':
       - match: compound
       - exim.satellite
+
+    '* and not monitoring.vm.habhub.org':
+      - match: compound
+      - monitoring.client
 
     habhub.vm.habhub.org:
       - habhub
