@@ -14,6 +14,18 @@ rsyslog_pkgs:
     - require:
       - pkgrepo: rsyslog_repo
 
+elasticsearch_repo:
+  pkgrepo.managed:
+    - name: deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main
+    - file: /etc/apt/sources.list.d/elasticsearch.list
+    - keyid: D88E42B4
+    - keyserver: pgp.mit.edu
+
+elasticsearch:
+  pkg.installed:
+    - require:
+      - pkgrepo: elasticsearch_repo
+  service.running: []
 
 rsyslog:
   service.running: []

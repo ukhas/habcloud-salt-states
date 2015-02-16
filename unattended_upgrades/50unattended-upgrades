@@ -6,6 +6,7 @@ Unattended-Upgrade::Origins-Pattern {
         "o=nginx";
         "o=apt.postgresql.org";
         "o=root";
+        "o=Elasticsearch";
 };
 
 Unattended-Upgrade::Mail "root";
