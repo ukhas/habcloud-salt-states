@@ -1,3 +1,5 @@
+### rsyslog
+
 rsyslog_repo:
   pkgrepo.managed:
     - name: deb http://debian.adiscon.com/v8-stable wheezy/
@@ -13,6 +15,18 @@ rsyslog_pkgs:
       - rsyslog-elasticsearch
     - require:
       - pkgrepo: rsyslog_repo
+
+rsyslog:
+  service.running: []
+
+
+/etc/rsyslog.d/habcloud-server.conf:
+  file.managed:
+    - source: salt://monitoring/logging/rsyslog-server.conf
+    - watch_in:
+      - service: rsyslog
+
+### elasticsearch
 
 elasticsearch_repo:
   pkgrepo.managed:
@@ -30,12 +44,8 @@ elasticsearch:
       - pkgrepo: elasticsearch_repo
   service.running: []
 
-rsyslog:
-  service.running: []
-
-
-/etc/rsyslog.d/habcloud-server.conf:
+/etc/elasticsearch/elasticsearch.yml:
   file.managed:
-    - source: salt://monitoring/logging/rsyslog-server.conf
+    - source: salt://monitoring/logging/elasticsearch.yml
     - watch_in:
-      - service: rsyslog
+      - service: elasticsearch
