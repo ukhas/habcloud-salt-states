@@ -1,14 +1,12 @@
 nginx:
-    # By default we use Debian's nginx, but individual VMs may need a more
-    # modern version, so can copy this into their own states
-    #pkgrepo.managed:
-    #    - humanname: nginx stable
-    #    - name: deb http://nginx.org/packages/debian/ wheezy nginx
-    #    - dist: wheezy
-    #    - file: /etc/apt/sources.list.d/nginx.list
-    #    - key_url: http://nginx.org/keys/nginx_signing.key
+    pkgrepo.managed:
+        - name: deb http://nginx.org/packages/debian/ wheezy nginx
+        - file: /etc/apt/sources.list.d/nginx.list
+        - key_url: http://nginx.org/keys/nginx_signing.key
     pkg:
         - installed
+        - require:
+            - pkgrepo: nginx
     service.running:
         - reload: true
         - enable: true
@@ -40,6 +38,10 @@ nginx:
 /etc/nginx/dhparam.pem:
     file.managed:
         - source: salt://nginx/dhparam.pem
+
+/etc/nginx/startssl.pem:
+    file.managed:
+        - source: salt://nginx/startssl.pem
 
 /etc/nginx/conf.d/catchall.conf:
     file.managed:
