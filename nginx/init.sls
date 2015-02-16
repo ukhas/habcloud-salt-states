@@ -3,7 +3,7 @@ nginx:
         - name: deb http://nginx.org/packages/debian/ wheezy nginx
         - file: /etc/apt/sources.list.d/nginx.list
         - key_url: http://nginx.org/keys/nginx_signing.key
-    pkg.latest:
+    pkg.installed:
         - require:
             - pkgrepo: nginx
     service.running:
