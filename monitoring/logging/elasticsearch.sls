@@ -19,3 +19,9 @@ elasticsearch:
     - source: salt://monitoring/logging/elasticsearch.yml
     - watch_in:
       - service: elasticsearch
+
+/etc/elasticsearch/templates/logstash_template.json:
+  file.managed:
+    - source: salt://monitoring/logging/elasticsearch_logstash_template.json
+    - watch_in:
+      - service: elasticsearch
