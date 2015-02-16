@@ -23,5 +23,6 @@ elasticsearch:
 /etc/elasticsearch/templates/logstash_template.json:
   file.managed:
     - source: salt://monitoring/logging/elasticsearch_logstash_template.json
+    - makedirs: true
     - watch_in:
       - service: elasticsearch
