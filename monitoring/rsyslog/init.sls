@@ -13,3 +13,14 @@ rsyslog_pkgs:
       - rsyslog-elasticsearch
     - require:
       - pkgrepo: rsyslog_repo
+
+
+rsyslog:
+  service.running: []
+
+
+/etc/rsyslog.d/habcloud-server.conf:
+  file.managed:
+    - source: salt://monitoring/rsyslog/rsyslog-server.conf
+    - watch_in:
+      - service: rsyslog
