@@ -9,7 +9,7 @@ kibana:
     - system: true
     - gid_from_name: true
 
-{% set kibana_version "kibana-4.0.0-rc1-linux-x64" %}
+{% set kibana_version = "kibana-4.0.0-rc1-linux-x64" %}
 
 kibana_download:
   archive.extracted:
