@@ -18,6 +18,9 @@ kibana_download:
     - source_hash: sha256=212307c5b4f493a7118dcab8fc61fe7548f0c0537c0c6354f00d7e8e5e376ed0
     - archive_format: tar
     - archive_user: kibana
+    - tar_options: z
+    - require:
+      - user: kibana
 
 kibana_config:
   file.managed:
@@ -26,6 +29,7 @@ kibana_config:
     - user: kibana
     - require:
       - archive: kibana_download
+      - user: kibana
 
 kibana_supervisord:
   file.managed:
