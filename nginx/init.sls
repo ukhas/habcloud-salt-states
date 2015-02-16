@@ -69,3 +69,4 @@ distro-nginx-sites:
     - names:
         - /etc/nginx/sites-available
         - /etc/nginx/sites-enabled
+        - /etc/nginx/conf.d/default.conf
