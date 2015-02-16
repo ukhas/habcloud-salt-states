@@ -21,6 +21,6 @@ rsyslog:
 
 /etc/rsyslog.d/habcloud-server.conf:
   file.managed:
-    - source: salt://monitoring/rsyslog/rsyslog-server.conf
+    - source: salt://monitoring/logging/rsyslog-server.conf
     - watch_in:
       - service: rsyslog

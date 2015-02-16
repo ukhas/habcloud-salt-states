@@ -7,11 +7,11 @@ Hosts our monitoring and analytics systems.
 Contains states for the clients of our monitoring system (other VMs). Not run 
 on the monitoring VM itself.
 
-## rsyslog
+## Logging
 
-Contains the rsyslog configuration to enable the monitoring VM to collect logs 
-from all the other VMs, store them locally and send them into ElasticSearch for 
-Kibana's use.
+Contains our logging setup. Each VM forwards all syslog entries to 
+monitoring.vm, which stores them on-disk for six months and saves them to 
+ElasticSearch for one month for viewing with Kibana.
 
 ## [Sentry](getsentry.com)
 
