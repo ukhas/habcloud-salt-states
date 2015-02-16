@@ -1,9 +1,9 @@
 nginx:
     pkgrepo.managed:
-        - name: deb http://nginx.org/packages/debian/ wheezy nginx
+        - name: deb http://nginx.org/packages/mainline/debian/ wheezy nginx
         - file: /etc/apt/sources.list.d/nginx.list
         - key_url: http://nginx.org/keys/nginx_signing.key
-    pkg.installed:
+    pkg.latest:
         - require:
             - pkgrepo: nginx
     service.running:
