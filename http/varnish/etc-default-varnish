@@ -4,8 +4,8 @@ START=yes
 NFILES=131072   # ulimit -n
 MEMLOCK=82000   # ulimit -l
 
-DAEMON_OPTS="-a :{{ port }} \
-             -T localhost:6082 \
+DAEMON_OPTS="-a {{ listen|join(",") }} \
+             -T localhost:{{ adm_port }} \
              -f /etc/varnish/default.vcl \
              -S /etc/varnish/secret \
-             -s malloc,256m"
+             -s malloc,{{ memory }}"

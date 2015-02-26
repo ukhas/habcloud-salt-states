@@ -1,0 +1,449 @@
+{% macro ship_ssl_certificate(name) %}
+/etc/ssl/private/{{ name }}.crt:
+  file.managed:
+    - show_diff: false
+    - mode: 600
+    - contents_pillar: ssl:{{ name|replace('.', '_') }}:cert
+    - watch_in:
+      - service: nginx
+
+/etc/ssl/private/{{ name }}.key:
+  file.managed:
+    - show_diff: false
+    - mode: 600
+    - contents_pillar: ssl:{{ name|replace('.', '_') }}:key
+    - watch_in:
+      - service: nginx
+{% endmacro %}
+
+{#
+    sites :
+        dictionary mapping string to
+            { hostname : string
+              aliases: string list
+              nginx_conf : string        (should extend http/nginx/site-template.conf)
+              ssl : { certificate : string } | None }
+    http_10_host : string
+        The host that HTTP/1.0 clients (that don't specify a "Host:") header are served.
+    http_port : int
+    ssl : { port : int, default_certificate : string } | None
+    varnish : { http : bool; ssl : bool; vcl : string | None; memory : string } | None
+        If varnish.ssl is True, then the nginx-varnish-nginx sandwich will be made.
+        memory should be a string like "256m"
+    forwarded_from : string | None
+        If varnish is enabled, nginx will always be set up to use X-Forwarded-For from varnish
+        (and simly if using the sandwich).
+        This option will have nginx or varnish (whichever is in front) accept X-Forwarded-For
+        headers from other hosts.
+ #}
+
+{% macro http(
+        sites,
+        http_port=80,
+        ssl=None,
+        varnish=None,
+        forwarded_from=None,
+        http_10_host=None
+    )
+ %}
+
+{% set varnish = varnish or {} %}
+{% set ssl = ssl or {} %}
+{% if forwarded_from is none %}
+    {% set forwarded_from = "null" %}  {# :-( #}
+{% endif %}
+
+{%
+  set ports = {
+    "http_front": http_port,
+    "ssl_front": ssl.port|default(443),
+    "nginx_http_back": 580,
+    "nginx_ssl_back": 583,
+    "varnish_back": 585
+  }
+%}
+
+{% set status_site_host = grains["host"] + ".private.vm.habhub.org" %}
+
+{% include "http/nginx/main.jinja" %}
+
+{% if varnish and (varnish.http or (ssl and varnish.ssl)) %}
+{% include "http/varnish/main.jinja" %}
+
+/etc/default/varnish:
+    file.managed:
+      - source: salt://http/varnish/etc-default-varnish
+      - template: jinja
+      - defaults:
+            listen:
+                {% if ssl and varnish.ssl %}
+                - "127.0.0.1:{{ ports.varnish_back }}"
+                {% endif %}
+                {% if varnish.http %}
+                - ":{{ ports.http_front }}"
+                {% endif %}
+            memory: {{ varnish.memory }}
+
+/etc/varnish/default.vcl:
+    file.managed:
+      - source: {{ varnish.vcl or "salt://http/varnish/default.vcl" }}
+      - template: jinja
+      - defaults:
+            ports: {{ ports }}
+            forwarded_from: {{ forwarded_from }}
+            status_site_host: {{ status_site_host }}
+{% else %}
+{% include "http/varnish/remove.jinja" %}
+{% endif %}
+
+{% if ssl %}
+/etc/nginx/conf.d/ssl-catchall.conf:
+    file.managed:
+      - source: salt://http/nginx/site-redirect.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: []
+            default_server: true
+            ssl:
+              certificate: {{ ssl.default_certificate }}
+              hsts: false
+            http_10_host: {{ not http_10_host }}
+            forwarded_from: {{ forwarded_from }}
+            port: {{ ports.ssl_front }}
+            localhost_only: false
+            log_tag: ssl_catchall
+            nginx_tag: ssl catchall
+            redirect_to: "http://habhub.org"
+            preserve_path: false
+
+{% else %}
+/etc/nginx/conf.d/ssl-catchall.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+{% endif %}
+
+{% if ssl and varnish and varnish.ssl %}
+{# this shouldn't get traffic, but we need it for the listen
+   directives #}
+/etc/nginx/conf.d/ssl-back-catchall.conf:
+    file.managed:
+      - source: salt://http/nginx/site-redirect.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: []
+            default_server: true
+            ssl: null
+            http_10_host: {{ not http_10_host }}
+            forwarded_from: 127.0.0.1
+            port: {{ ports.nginx_ssl_back }}
+            localhost_only: true
+            log_tag: ssl_back_catchall
+            nginx_tag: ssl back catchall
+            redirect_to: "http://habhub.org"
+            preserve_path: false
+{% else %}
+/etc/nginx/conf.d/ssl-back-catchall.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+{% endif %}
+
+/etc/nginx/conf.d/http-catchall.conf:
+    file.managed:
+      - source: salt://http/nginx/site-redirect.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: []
+            default_server: true
+            ssl: null
+            http_10_host: {{ not http_10_host }}
+            log_tag: http_catchall
+            nginx_tag: http catchall
+            redirect_to: "http://habhub.org"
+            preserve_path: false
+            {% if varnish and varnish.http %}
+            port: {{ ports.nginx_http_back }}
+            localhost_only: true
+            forwarded_from: 127.0.0.1
+            {% else %}
+            port: {{ ports.http_front }}
+            localhost_only: false
+            forwarded_from: {{ forwarded_from }}
+            {% endif %}
+
+/etc/nginx/conf.d/status.conf:
+    file.managed:
+      - source: salt://http/nginx/site-status.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ status_site_host }}]
+            default_server: false
+            ssl: null
+            http_10_host: false
+            log_tag: status
+            nginx_tag: status
+            {% if varnish and varnish.http %}
+            port: {{ ports.nginx_http_back }}
+            localhost_only: true
+            forwarded_from: 127.0.0.1
+            {% else %}
+            port: {{ ports.http_front }}
+            localhost_only: false
+            forwarded_from: {{ forwarded_from }}
+            {% endif %}
+
+
+{% for site_name, site in sites.items() %}
+
+{% if ssl and site.ssl %}
+/etc/nginx/conf.d/ssl-{{ site_name }}.conf:
+    file.managed:
+      - source: {{ site.nginx_conf }}
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ site.hostname }}]
+            default_server: false
+            http_10_host: {{ site_name == http_10_host }}
+            {% if varnish and varnish.ssl %}
+            ssl: null
+            port: {{ ports.nginx_ssl_back }}
+            localhost_only: true
+            forwarded_from: 127.0.0.1
+            log_tag: nginx_ssl_back_{{ site_name }}
+            nginx_tag: nginx ssl back {{ site_name }}
+            {% else %}
+            ssl:
+              certificate: {{ site.ssl.certificate }}
+              hsts: true
+            port: {{ ports.ssl_front }}
+            localhost_only: false
+            forwarded_from: {{ forwarded_from }}
+            log_tag: nginx_ssl_{{ site_name }}
+            nginx_tag: nginx ssl {{ site_name }}
+            {% endif %}
+
+/etc/nginx/conf.d/http-{{ site_name }}.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+
+{% else %}
+/etc/nginx/conf.d/http-{{ site_name }}.conf:
+    file.managed:
+      - source: {{ site.nginx_conf }}
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ site.hostname }}]
+            default_server: false
+            ssl: null
+            http_10_host: {{ site_name == http_10_host }}
+            {% if varnish and varnish.http %}
+            port: {{ ports.nginx_http_back }}
+            localhost_only: true
+            forwarded_from: 127.0.0.1
+            log_tag: nginx_http_back_{{ site_name }}
+            nginx_tag: nginx http back {{ site_name }}
+            {% else %}
+            port: {{ ports.http_front }}
+            localhost_only: false
+            forwarded_from: {{ forwarded_from }}
+            log_tag: nginx_http_{{ site_name }}
+            nginx_tag: nginx http {{ site_name }}
+            {% endif %}
+
+/etc/nginx/conf.d/ssl-{{ site_name }}.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+{% endif %}
+
+{% if ssl and site.ssl and varnish and varnish.ssl %}
+/etc/nginx/conf.d/varnish-sandwich-{{ site_name }}.conf:
+    file.managed:
+      - source: salt://http/nginx/site-varnish-sandwich.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ site.hostname }}]
+            port: {{ ports.ssl_front }}
+            localhost_only: false
+            ssl:
+              certificate: {{ site.ssl.certificate }}
+              hsts: true
+            default_server: false
+            http_10_host: {{ site_name == http_10_host }}
+            forwarded_from: {{ forwarded_from }}
+            log_tag: varnish_sandwich_{{ site_name }}
+            nginx_tag: varnish sandwich {{ site_name }}
+            pass_to: "http://127.0.0.1:{{ ports.varnish_back }}"
+{% else %}
+/etc/nginx/conf.d/varnish-sandwich-{{ site_name }}.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+{% endif %}
+
+{% if ssl and site.aliases %}
+{#
+  Note
+    - we don't bother varnish-sandwiching this
+    - even if this site has no ssl certificate, we use the default one,
+      and send people to http
+#}
+/etc/nginx/conf.d/ssl-aliases-{{ site_name }}.conf:
+    file.managed:
+      - source: salt://http/nginx/site-redirect.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ site.aliases|join(",") }}]
+            port: {{ ports.ssl_front }}
+            localhost_only: false
+            ssl:
+              {% if site.ssl %}
+              certificate: {{ site.ssl.certificate }}
+              hsts: true
+              {% else %}
+              certificate: {{ ssl.default_certificate }}
+              hsts: false
+              {% endif %}
+            default_server: false
+            http_10_host: false
+            forwarded_from: {{ forwarded_from }}
+            log_tag: nginx_ssl_aliases_{{ site_name }}
+            nginx_tag: varnish ssl aliases {{ site_name }}
+            {% if site.ssl %}
+            redirect_to: "https://{{ site.hostname }}"
+            {% else %}
+            redirect_to: "http://{{ site.hostname }}"
+            {% endif %}
+            preserve_path: true
+{% else %}
+/etc/nginx/conf.d/ssl-aliases-{{ site_name }}.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+{% endif %}
+
+{% if ssl and site.ssl %}
+{# this could feasibly be part of http aliases, but this is simpler #}
+/etc/nginx/conf.d/http-tossl-{{ site_name }}.conf:
+    file.managed:
+      - source: salt://http/nginx/site-redirect.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ site.hostname }}]
+            default_server: false
+            ssl: null
+            http_10_host: {{ site_name == http_10_host }}
+            log_tag: nginx_http_tossl_{{ site_name }}
+            nginx_tag: varnish http tossl {{ site_name }}
+            preserve_path: true
+            redirect_to: "https://{{ site.hostname }}"
+            {% if varnish and varnish.http %}
+            port: {{ ports.nginx_http_back }}
+            localhost_only: true
+            forwarded_from: 127.0.0.1
+            {% else %}
+            port: {{ ports.http_front }}
+            localhost_only: false
+            forwarded_from: {{ forwarded_from }}
+            {% endif %}
+{% else %}
+/etc/nginx/conf.d/http-tossl-{{ site_name }}.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+{% endif %}
+
+{% if ssl and not site.ssl %}
+/etc/nginx/conf.d/ssl-tohttp-{{ site_name }}.conf:
+    file.managed:
+      - source: salt://http/nginx/site-redirect.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ site.hostname }}]
+            default_server: false
+            ssl:
+              certificate: {{ ssl.default_certificate }}
+              hsts: false
+            http_10_host: {{ site_name == http_10_host }}
+            forwarded_from: {{ forwarded_from }}
+            log_tag: nginx_ssl_tohttp_{{ site_name }}
+            nginx_tag: varnish ssl tohttp {{ site_name }}
+            preserve_path: true
+            redirect_to: "http://{{ site.hostname }}"
+            port: {{ ports.ssl_front }}
+            localhost_only: false
+{% else %}
+/etc/nginx/conf.d/ssl-tohttp-{{ site_name }}.conf:
+    file.absent:
+      - watch_in:
+          - service: nginx
+{% endif %}
+
+{% if site.aliases %}
+/etc/nginx/conf.d/http-aliases-{{ site_name }}.conf:
+    file.managed:
+      - source: salt://http/nginx/site-redirect.conf
+      - template: jinja
+      - watch_in:
+          - service: nginx
+      - defaults:
+            hostnames: [{{ site.aliases|join(",") }}]
+            default_server: false
+            ssl: null
+            http_10_host: false
+            log_tag: nginx_http_aliases_{{ site_name }}
+            nginx_tag: varnish http aliases {{ site_name }}
+            preserve_path: true
+            {% if site.ssl|default(false) %}
+            redirect_to: "https://{{ site.hostname }}"
+            {% else %}
+            redirect_to: "http://{{ site.hostname }}"
+            {% endif %}
+            {% if varnish and varnish.http %}
+            port: {{ ports.nginx_http_back }}
+            localhost_only: true
+            forwarded_from: 127.0.0.1
+            {% else %}
+            port: {{ ports.http_front }}
+            localhost_only: false
+            forwarded_from: {{ forwarded_from }}
+            {% endif %}
+{% endif %}
+{% endfor %} {# for _ in sites #}
+
+{# XXX: This is really really nasty. There should be a better way... #}
+{% if ssl %}
+{{ ship_ssl_certificate(ssl.default_certificate) }}
+{% set shipped_ssl_certs = [ssl.default_certificate] %}
+
+{% for site in sites.values() %}
+{% if site.ssl and site.ssl.certificate not in shipped_ssl_certs %}
+{{ ship_ssl_certificate(site.ssl.certificate) }}
+{% set shipped_ssl_certs = shipped_ssl_certs + [site.ssl.certificate] %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% endmacro %}

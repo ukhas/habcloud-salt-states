@@ -1,2 +1,0 @@
-{% from "nginx/macros.jinja" import listen_addresses %}
-{{ listen_addresses(port=port, ssl=ssl, default_server=False, use_x_forwarded=use_x_forwarded) }}
