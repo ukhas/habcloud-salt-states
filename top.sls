@@ -32,9 +32,8 @@ base:
       - adamscratch
 
     scratch.vm.habhub.org:
-      - varnish
       - ntp
-      - ukhas
+      - http/test/one
 
     monitoring.vm.habhub.org:
       - monitoring
