@@ -11,9 +11,16 @@ nginx:
         - enable: true
         - watch:
             - pkg: nginx
+            - file: /etc/init.d/nginx
             - file: /etc/nginx/nginx.conf
             - file: /etc/nginx/dhparam.pem
             - file: /etc/nginx/startssl.pem
+
+# This makes me quite sad :-(
+/etc/init.d/nginx:
+    file.managed:
+        - source: salt://http/nginx/wheezy-init.d
+        - mode: 755
 
 /etc/nginx/nginx.conf:
     file.managed:
