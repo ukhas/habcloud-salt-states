@@ -59,7 +59,8 @@
     "ssl_front": ssl.port|default(443),
     "nginx_http_back": 580,
     "nginx_ssl_back": 583,
-    "varnish_back": 585
+    "varnish_back": 585,
+    "varnish_adm": 588
   }
 %}
 
@@ -83,6 +84,7 @@
                 - ":{{ ports.http_front }}"
                 {% endif %}
             memory: {{ varnish.memory }}
+            adm_port: {{ ports.varnish_adm }}
 
 /etc/varnish/default.vcl:
     file.managed:
