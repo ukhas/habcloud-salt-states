@@ -6,23 +6,20 @@
         "scratch": {
             "hostname": "scratch.vm.habhub.org",
             "aliases": ["scratch.public.vm.habhub.org"],
-            "nginx_conf": "salt://http/test/one-nginx-site.conf",
-            "ssl": None
+            "nginx_conf": "salt://http/test/one-nginx-site.conf"
         },
         "test-one": {
             "hostname": "test-one.habhub.org",
             "aliases": [],
-            "nginx_conf": "salt://http/test/one-nginx-site.conf",
-            "ssl": {"certificate": "test-one.habhub.org"}
+            "nginx_conf": "salt://http/test/one-nginx-site.conf"
         },
         "test-two": {
             "hostname": "test-two.habhub.org",
             "aliases": [],
-            "nginx_conf": "salt://http/test/one-nginx-site.conf",
-            "ssl": {"certificate": "test-two.habhub.org"}
+            "nginx_conf": "salt://http/test/one-nginx-site.conf"
         }
     },
-    ssl = { "default_certificate": "scratch.vm.habhub.org" },
+    varnish = { "http": true, "vcl": none, "memory": "128m" },
     http_10_host="test-one"
   )
 }}
