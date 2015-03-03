@@ -7,7 +7,7 @@
             "hostname": "scratch.vm.habhub.org",
             "aliases": ["scratch.public.vm.habhub.org"],
             "nginx_conf": "salt://http/test/one-nginx-site.conf",
-            "ssl": {"certificate": "scratch.vm.habhub.org"}
+            "ssl": None
         },
         "test-one": {
             "hostname": "test-one.habhub.org",
