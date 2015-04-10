@@ -33,7 +33,7 @@ base:
 
     scratch.vm.habhub.org:
       - ntp
-      - http/test/one
+      - http/test/http-debugger
 
     monitoring.vm.habhub.org:
       - monitoring
