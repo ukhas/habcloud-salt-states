@@ -222,8 +222,8 @@
             port: {{ ports.nginx_ssl_back }}
             localhost_only: true
             forwarded_from: 127.0.0.1
-            log_tag: nginx_ssl_back_{{ site_name }}
-            nginx_tag: nginx ssl back {{ site_name }}
+            log_tag: ssl_back_{{ site_name }}
+            nginx_tag: ssl back {{ site_name }}
             {% else %}
             ssl:
               certificate: {{ site.ssl.certificate }}
@@ -231,8 +231,8 @@
             port: {{ ports.ssl_front }}
             localhost_only: false
             forwarded_from: {{ forwarded_from }}
-            log_tag: nginx_ssl_{{ site_name }}
-            nginx_tag: nginx ssl {{ site_name }}
+            log_tag: ssl_{{ site_name }}
+            nginx_tag: ssl {{ site_name }}
             {% endif %}
 
 /etc/nginx/conf.d/http-{{ site_name }}.conf:
@@ -256,14 +256,14 @@
             port: {{ ports.nginx_http_back }}
             localhost_only: true
             forwarded_from: 127.0.0.1
-            log_tag: nginx_http_back_{{ site_name }}
-            nginx_tag: nginx http back {{ site_name }}
+            log_tag: http_back_{{ site_name }}
+            nginx_tag: http back {{ site_name }}
             {% else %}
             port: {{ ports.http_front }}
             localhost_only: false
             forwarded_from: {{ forwarded_from }}
-            log_tag: nginx_http_{{ site_name }}
-            nginx_tag: nginx http {{ site_name }}
+            log_tag: http_{{ site_name }}
+            nginx_tag: http {{ site_name }}
             {% endif %}
 
 /etc/nginx/conf.d/ssl-{{ site_name }}.conf:
@@ -289,8 +289,8 @@
             default_server: false
             http_10_host: {{ site_name == http_10_host }}
             forwarded_from: {{ forwarded_from }}
-            log_tag: varnish_sandwich_{{ site_name }}
-            nginx_tag: varnish sandwich {{ site_name }}
+            log_tag: sandwich_{{ site_name }}
+            nginx_tag: sandwich {{ site_name }}
             pass_to: "http://127.0.0.1:{{ ports.varnish_back }}"
 {% else %}
 /etc/nginx/conf.d/varnish-sandwich-{{ site_name }}.conf:
@@ -327,8 +327,8 @@
             default_server: false
             http_10_host: false
             forwarded_from: {{ forwarded_from }}
-            log_tag: nginx_ssl_aliases_{{ site_name }}
-            nginx_tag: varnish ssl aliases {{ site_name }}
+            log_tag: ssl_aliases_{{ site_name }}
+            nginx_tag: ssl aliases {{ site_name }}
             {% if site.ssl %}
             redirect_to: "https://{{ site.hostname }}"
             {% else %}
@@ -355,8 +355,8 @@
             default_server: false
             ssl: null
             http_10_host: {{ site_name == http_10_host }}
-            log_tag: nginx_http_tossl_{{ site_name }}
-            nginx_tag: varnish http tossl {{ site_name }}
+            log_tag: http_tossl_{{ site_name }}
+            nginx_tag: http tossl {{ site_name }}
             preserve_path: true
             redirect_to: "https://{{ site.hostname }}"
             {% if varnish and varnish.http %}
@@ -390,8 +390,8 @@
               hsts: false
             http_10_host: {{ site_name == http_10_host }}
             forwarded_from: {{ forwarded_from }}
-            log_tag: nginx_ssl_tohttp_{{ site_name }}
-            nginx_tag: varnish ssl tohttp {{ site_name }}
+            log_tag: ssl_tohttp_{{ site_name }}
+            nginx_tag: ssl tohttp {{ site_name }}
             preserve_path: true
             redirect_to: "http://{{ site.hostname }}"
             port: {{ ports.ssl_front }}
@@ -415,8 +415,8 @@
             default_server: false
             ssl: null
             http_10_host: false
-            log_tag: nginx_http_aliases_{{ site_name }}
-            nginx_tag: varnish http aliases {{ site_name }}
+            log_tag: http_aliases_{{ site_name }}
+            nginx_tag: http aliases {{ site_name }}
             preserve_path: true
             {% if site.ssl|default(false) %}
             redirect_to: "https://{{ site.hostname }}"
