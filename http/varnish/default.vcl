@@ -12,6 +12,11 @@ backend nginx_ssl_back {
 }
 {% endblock %}
 
+acl local {
+    "127.0.0.1";
+    "::1";
+}
+
 {% block vcl_recv %}
 sub vcl_recv {
     if (server.port == {{ ports.http_front }}) {
@@ -29,7 +34,7 @@ sub vcl_recv {
         }
         set req.backend = nginx_http_back;
     } else if (server.port == {{ ports.varnish_back }}) {
-        if (client.ip != "127.0.0.1" && client.ip != "::1") {
+        if (client.ip !~ local) {
             error 403 "Forbidden";
         }
         set req.backend = nginx_ssl_back;
