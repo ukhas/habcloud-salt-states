@@ -20,7 +20,7 @@ gunicorn-{{ name }}:
 # provision supervisor config file to autostart the app
 /etc/supervisor/conf.d/{{ name }}.conf:
   file.managed:
-    - source: salt://gunicorn/supervisor.conf
+    - source: salt://http/gunicorn/supervisor.conf
     - template: jinja
     - context:
         name: {{ name }}
