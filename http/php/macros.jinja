@@ -13,8 +13,9 @@
             max_spare: {{ max_spare }}
         - watch_in:
             - service: php5-fpm
-        {# it is not necessarily the case that if user is not www-data
-           we are creating the user in another state, but it is almost #}
+        {# if the user is not www-data, it is not necessarily the case that
+           we are creating the user in another state. But it is almost 
+           always true. #}
         {% if user != "www-data" %}
         - require:
             - user: {{ user }}

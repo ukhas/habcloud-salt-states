@@ -14,7 +14,7 @@ php5-fpm:
 
 /etc/php5/conf.d/cgi-fix-pathinfo.ini:
     file.managed:
-        - source: salt://nginx/cgi-fix-pathinfo.ini
+        - contents: "cgi.fix_pathinfo=0\n"
         - require:
             - pkg: php5-fpm
 
