@@ -38,7 +38,7 @@ dl-fldigi-code:
       - git: dl-fldigi-code
 
 # supervisor+gunicorn
-{% from "gunicorn/macros.jinja" import gunicorn %}
+{% from "http/gunicorn/macros.jinja" import gunicorn %}
 {{ gunicorn(name="dfvc", user="dfvc", venv="/home/dfvc/venv",
             dir="/home/dfvc/dl-fldigi/update_server", app="app:app",
             workers=2) }}
