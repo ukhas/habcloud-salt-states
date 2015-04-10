@@ -52,7 +52,8 @@ python3:
         }  
     },  
     ssl = { "default_certificate": "scratch.vm.habhub.org" },
-    varnish = { "http": false, "ssl": true, "vcl": none, "memory": "128m" },
+    varnish = { "http": true, "ssl": true, "vcl": none, "memory": "128m" },
+    forwarded_from = "10.0.2.124",
     http_10_host="scratch"
   )
 }}

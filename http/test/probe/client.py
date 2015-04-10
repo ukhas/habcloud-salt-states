@@ -136,7 +136,12 @@ def test(connect, http_host, ssl):
         else:
             conn = http.client.HTTPConnection(connect)
 
-        headers = {"Host": http_host}
+        headers = {
+            "Host": http_host,
+            "X-Forwarded-For": "9.9.9.9",
+            "X-Forwarded-Host": "garbage-host",
+            "X-Forwarded-Proto": "banana"
+        }
 
         conn.request("GET", "/probe/{}".format(nonce), headers=headers)
         resp = conn.getresponse()
