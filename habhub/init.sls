@@ -1,13 +1,20 @@
 include:
-    - nginx
     - .dl_fldigi_version_check
 
-/etc/nginx/conf.d/habhub.org.conf:
-    file.managed:
-        - source: salt://habhub/nginx-site.conf
-        - template: jinja
-        - watch_in:
-            - service: nginx
+{% from "http/macros.jinja" import http %}
+
+{{
+  http(
+    sites = { 
+        "habhub": {
+            "hostname": "habhub.org",
+            "aliases": ["www.habhub.org"], 
+            "nginx_conf": "salt://habhub/nginx-site.conf"
+        }   
+    },  
+    http_10_host="habhub"
+  )
+}}
 
 habhub-homepage:
     git.latest:
