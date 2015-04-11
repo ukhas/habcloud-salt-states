@@ -1,6 +1,3 @@
-{% from "http/macros.jinja" import http %}
-{% from "http/php/macros.jinja" import php_pool %}
-
 include:
   - http.php
 
@@ -64,8 +61,10 @@ salt://ukhas/install_dokuwiki.sh:
     file.managed:
       - contents: "<?php"
 
+{% from "http/php/macros.jinja" import php_pool %}
 {{ php_pool("ukhas-dokuwiki", user="ukhas-dokuwiki") }}
 
+{% from "http/macros.jinja" import http %}
 {{
   http(
     sites = { 
@@ -86,3 +85,26 @@ salt://ukhas/install_dokuwiki.sh:
     http_10_host="ukhas"
   )
 }}
+
+{% from "backups/macros.jinja" import backup %}
+{{ backup("ukhas-dokuwiki", "ukhas-dokuwiki", "tar c /srv/ukhas-data", "weekly") }}
+
+/srv/ukhas-dokuwiki/incremental_helper.sh:
+  file.managed:
+    - makedirs: true
+    - dirmode: 700
+    - user: root
+    - mode: 700
+    - source: salt://ukhas/incremental_helper.sh
+    - require_in:
+       - cron: backup-ukhas-dokuwiki-incremental
+
+salt://ukhas/initial_incremental_stamp.sh:
+  cmd.run:
+    - creates: /srv/ukhas-data/incremental-stamp
+    - require:
+       - user: ukhas-dokuwiki
+    - require_in:
+       - cron: backup-ukhas-dokuwiki-incremental
+
+{{ backup("ukhas-dokuwiki-incremental", "ukhas-dokuwiki", "/srv/ukhas-dokuwiki/incremental_helper.sh", "daily") }}
