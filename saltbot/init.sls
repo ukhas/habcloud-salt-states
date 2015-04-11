@@ -1,6 +1,5 @@
 include:
   - supervisor
-  - nginx
   - postgres.9_1
 
 saltbot:
@@ -112,9 +111,17 @@ saltbot-sighup:
       - git: saltbot-code
       - file: /home/saltbot/saltbot.yml
 
-/etc/nginx/conf.d/saltbot.conf:
-  file.managed:
-    - source: salt://saltbot/nginx-site.conf
-    - template: jinja
-    - watch_in:
-      - service: nginx
+{% from "http/macros.jinja" import http %}
+{{
+  http(
+    sites = { 
+        "saltbot": {
+            "hostname": "saltbot.habhub.org",
+            "aliases": [],
+            "nginx_conf": "salt://saltbot/nginx-site.conf"
+        }  
+    },  
+    http_10_host="saltbot",
+    forwarded_from="10.0.1.115"
+  )
+}}

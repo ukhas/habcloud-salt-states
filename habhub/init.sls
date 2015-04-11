@@ -9,7 +9,12 @@ include:
         "habhub": {
             "hostname": "habhub.org",
             "aliases": ["www.habhub.org"], 
-            "nginx_conf": "salt://habhub/nginx-site.conf"
+            "nginx_conf": "salt://habhub/nginx/habhub.conf"
+        },
+        "saltbotproxy": {
+            "hostname": "saltbot.habhub.org",
+            "aliases": [], 
+            "nginx_conf": "salt://habhub/nginx/saltbot-proxy.conf"
         }   
     },  
     http_10_host="habhub"
