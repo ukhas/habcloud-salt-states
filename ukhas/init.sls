@@ -100,7 +100,7 @@ salt://ukhas/install_dokuwiki.sh:
        - cron: backup-ukhas-dokuwiki-incremental
 
 salt://ukhas/initial_incremental_stamp.sh:
-  cmd.run:
+  cmd.script:
     - creates: /srv/ukhas-data/incremental-stamp
     - require:
        - user: ukhas-dokuwiki
