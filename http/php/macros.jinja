@@ -2,7 +2,7 @@
                   min_spare=5, max_spare=10) %}
 /etc/php5/fpm/pool.d/{{ name }}.conf:
     file.managed:
-        - source: salt://nginx/php-fpm-pool.conf
+        - source: salt://http/php/php-fpm-pool.conf
         - template: jinja
         - defaults:
             name: {{ name }}
