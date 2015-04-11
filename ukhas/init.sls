@@ -96,7 +96,7 @@ salt://ukhas/install_dokuwiki.sh:
     - makedirs: true
     - dirmode: 700
     - user: root
-    - mode: 700
+    - mode: 755
     - source: salt://ukhas/incremental_helper.sh
     - require_in:
        - cron: backup-ukhas-dokuwiki-incremental
