@@ -26,3 +26,35 @@ varnish-restart:
         - watch:
             - pkg: varnish
             - file: /etc/default/varnish
+
+/etc/default/varnishncsa:
+    file.managed:
+      - source: salt://http/varnish/etc-default-varnishncsa
+      - require:
+          - pkg: varnish
+
+varnishncsa:
+    service.running:
+      - enable: true
+      - watch:
+          - pkg: varnish
+          - file: /etc/default/varnishncsa
+
+/etc/logrotate.d/varnish:
+    file.managed:
+      - source: salt://http/varnish/logrotate
+      - require:
+          - pkg: varnish
+
+/etc/init.d/varnishncsa-timing:
+    file.managed:
+      - source: salt://http/varnish/varnishncsa-timing
+      - mode: 755
+
+
+varnishncsa-timing:
+    service.running:
+      - enable: true
+      - watch:
+          - pkg: varnish
+          - file: /etc/init.d/varnishncsa-timing
