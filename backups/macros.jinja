@@ -2,7 +2,8 @@
 {# name: backup filename, something short and concise.                      #}
 {# user: the user to run `cmd` as                                           #}
 {# cmd: the command to run that will send to stdout whatever is to be saved #}
-{% macro backup(name, user, cmd) %}
+{# frequency: "daily" or "weekly"                                           #}
+{% macro backup(name, user, cmd, frequency="weekly") %}
 "backup-{{ name }}":
   file.managed:
     - name: /root/backups/{{ name }}.sh
@@ -19,7 +20,13 @@
   cron.present:
     - minute: random
     - hour: 3
+    {% if frequency == "daily" %}
+    - dayweek: '*'
+    {% elif frequency == "weekly" %}
     - dayweek: 0
+    {% else %}
+    Invalid frequency!
+    {% endif %}
     - name: /root/backups/{{ name }}.sh
     - identifier: "backup-{{ name }}"
 {% endmacro %}

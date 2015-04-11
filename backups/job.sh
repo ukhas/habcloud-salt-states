@@ -1,6 +1,9 @@
 #!/bin/bash
 # Backup job {{ name }}
 
+set -e
+set -o pipefail
+
 # The user running the backup job probably can't operate from /root
 cd /
 
