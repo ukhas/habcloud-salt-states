@@ -34,8 +34,8 @@ base:
     ukhas.vm.habhub.org:
       - ukhas
 
-    monitoring.vm.habhub.org:
-      - monitoring
+#    monitoring.vm.habhub.org:
+#      - monitoring
 
     predictor-hackathon.vm.habhub.org:
       - http/test/hackathon
