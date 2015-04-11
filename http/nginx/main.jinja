@@ -21,6 +21,8 @@ nginx:
     file.managed:
         - source: salt://http/nginx/wheezy-init.d
         - mode: 755
+        - require:
+            - pkg: nginx
 
 /etc/nginx/nginx.conf:
     file.managed:
@@ -31,10 +33,21 @@ nginx:
 /etc/nginx/dhparam.pem:
     file.managed:
         - source: salt://http/nginx/data/dhparam.pem
+        - require:
+            - pkg: nginx
 
 /etc/nginx/startssl.pem:
     file.managed:
         - source: salt://http/nginx/data/startssl.pem
+        - require:
+            - pkg: nginx
+
+/etc/nginx/fastcgi_params:
+    file.managed:
+        - source: salt://http/nginx/fastcgi_params
+        - require:
+            - pkg: nginx
+             
 
 /srv/nginx-common/robots.txt:
   file.managed:
@@ -56,3 +69,5 @@ distro-nginx-sites:
         - /etc/nginx/sites-available
         - /etc/nginx/sites-enabled
         - /etc/nginx/conf.d/default.conf
+    - require:
+        - pkg: nginx
