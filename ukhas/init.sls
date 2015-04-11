@@ -89,7 +89,7 @@ salt://ukhas/install_dokuwiki.sh:
 
 {% from "backups/macros.jinja" import backup %}
 {{ backup("ukhas-dokuwiki", "ukhas-dokuwiki",
-          "tar c /srv/ukhas-data --exclude=/srv/ukhas-data/data/cache",
+          "tar c /srv/ukhas-data --exclude=/srv/ukhas-data/data/cache -P",
           "weekly") }}
 
 /srv/ukhas-dokuwiki/incremental_helper.sh:
