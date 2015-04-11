@@ -1,8 +1,8 @@
-include:
-    - nginx
-    - nginx.php
+{% from "http/macros.jinja" import http %}
+{% from "http/php/macros.jinja" import php_pool %}
 
-{% from "nginx/php-macros.jinja" import php_pool %}
+include:
+  - http.php
 
 ukhas-dokuwiki:
     group.present: []
@@ -66,14 +66,23 @@ salt://ukhas/install_dokuwiki.sh:
 
 {{ php_pool("ukhas-dokuwiki", user="ukhas-dokuwiki") }}
 
-/etc/nginx/conf.d/ukhas.conf:
-    file.managed:
-      - source: salt://ukhas/nginx-site.conf
-      - template: jinja
-      - watch_in:
-          - service: nginx
-
-extend:
-    /etc/varnish/default.vcl:
-        file.managed:
-            - source: salt://ukhas/varnish.vcl
+{{
+  http(
+    sites = { 
+        "ukhas": {
+            "hostname": "ukhas.org.uk",
+            "aliases": ["www.ukhas.org.uk", "wiki.ukhas.org.uk"],
+            "nginx_conf": "salt://ukhas/nginx-site.conf",
+            "ssl": {"certificate": "ukhas.org.uk"}
+        }  
+    },  
+    ssl = { "default_certificate": "ukhas.org.uk" },
+    varnish = {
+        "http": false,
+        "ssl": true,
+        "vcl": "salt://ukhas/varnish.vcl",
+        "memory": "1G"
+    },
+    http_10_host="ukhas"
+  )
+}}

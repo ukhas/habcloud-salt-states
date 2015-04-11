@@ -31,9 +31,8 @@ base:
     adamscratch.vm.habhub.org:
       - adamscratch
 
-    scratch.vm.habhub.org:
-      - ntp
-      - http/test/http-debugger
+    ukhas.vm.habhub.org:
+      - ukhas
 
     monitoring.vm.habhub.org:
       - monitoring

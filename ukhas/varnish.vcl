@@ -20,7 +20,7 @@
         /* XXX: does this produce lots of useless PHP sessions? */
     } else if ({{ authed_condition() }}) {
         /* User is logged in. Response will contain references to the user,
-           could contain, 'Set-Cookie' headers that log the user out (this
+           and could contain 'Set-Cookie' headers that log the user out (this
            will even happen on a GET request...), ... */
         return (pass);
     } else {
