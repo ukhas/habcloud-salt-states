@@ -1,5 +1,6 @@
 include:
   - http.php
+  - backups
 
 ukhas-dokuwiki:
     group.present: []
