@@ -8,12 +8,14 @@ varnish:
             - service: nginx
             - pkg: varnish
         - watch:
-            - file: /etc/init.d/varnish
             - file: /etc/varnish/default.vcl
 
-/etc/init.d/varnish:
+# the last line prevents proper error-exits on config fail
+varnish-fix-initscript:
     file.comment:
-        # the last line prevents proper error-exits on config fail
+        - names:
+            - /etc/init.d/varnish
+            - /etc/init.d/varnishncsa
         - regex: "^exit 0$"
         - require:
             - pkg: varnish
@@ -26,6 +28,7 @@ varnish-restart:
         - watch:
             - pkg: varnish
             - file: /etc/default/varnish
+            - file: /etc/init.d/varnish
 
 /etc/default/varnishncsa:
     file.managed:
@@ -39,6 +42,7 @@ varnishncsa:
       - watch:
           - pkg: varnish
           - file: /etc/default/varnishncsa
+          - file: /etc/init.d/varnish
 
 /etc/logrotate.d/varnish:
     file.managed:
