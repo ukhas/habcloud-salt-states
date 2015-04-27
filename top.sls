@@ -39,6 +39,3 @@ base:
 
     predictor-hackathon.vm.habhub.org:
       - http/test/hackathon
-
-    scratch.vm.habhub.org:
-      - ukhas
