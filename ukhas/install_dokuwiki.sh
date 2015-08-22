@@ -5,7 +5,7 @@ TAR="tar --no-same-permissions --no-same-owner"
 mkdir /srv/ukhas-dokuwiki # must not exist already
 mkdir /tmp/dokuwiki
 
-wget -qO /tmp/dokuwiki/stable.tgz    http://download.dokuwiki.org/src/dokuwiki/dokuwiki-oldstable.tgz
+wget -qO /tmp/dokuwiki/stable.tgz    http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
 $TAR -xf /tmp/dokuwiki/stable.tgz    -C /srv/ukhas-dokuwiki --strip-components=1
 
 wget -qO /tmp/dokuwiki/recaptcha.tgz https://github.com/liip/dw-plugin-recaptcha/archive/master.tar.gz
