@@ -13,6 +13,8 @@ ukhas-dokuwiki:
 salt://ukhas/install_dokuwiki.sh:
     cmd.script:
       - creates: /srv/ukhas-dokuwiki
+      - watch_in:
+          - service: php5-fpm
 
 /srv/ukhas-data:
     file.directory:

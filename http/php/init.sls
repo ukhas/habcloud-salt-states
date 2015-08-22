@@ -6,7 +6,6 @@ php5-fpm:
             - php-apc
     service.running:
         - name: php5-fpm
-        - reload: true
         - enable: true
         - watch:
             - pkg: php5-fpm
