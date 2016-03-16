@@ -5,6 +5,7 @@ base:
       - auth.ssh
       - auth.users
       - apt_cache.client
+      - sysstat
 
     'ceto.habhub.org,phorcys.habhub.org':
       - match: list

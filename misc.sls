@@ -7,7 +7,6 @@ misc-packages:
           - rsync
           - iotop
           - iftop
-          - sysstat
           - netcat-openbsd
           - pv
           - tree
