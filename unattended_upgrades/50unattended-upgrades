@@ -7,6 +7,7 @@ Unattended-Upgrade::Origins-Pattern {
         "o=apt.postgresql.org";
         "o=root";
         "o=Elasticsearch";
+        "o=InfluxDB";
 };
 
 Unattended-Upgrade::Mail "root";
