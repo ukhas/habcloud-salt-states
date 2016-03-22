@@ -15,8 +15,13 @@ include:
             "hostname": "saltbot.habhub.org",
             "aliases": [], 
             "nginx_conf": "salt://habhub/nginx/saltbot-proxy.conf"
-        }   
-    },  
+        },
+        "ukhasnet-grafana": {
+            "hostname": "grafana.ukhas.net",
+            "aliases": [],
+            "nginx_conf": "salt://habhub/nginx/ukhasnet-grafana.conf"
+        },
+    },
     http_10_host="habhub"
   )
 }}
