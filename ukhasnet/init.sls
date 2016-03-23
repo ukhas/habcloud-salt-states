@@ -10,6 +10,7 @@ include:
     sites = {
       "grafana.ukhas.net": {
         "hostname": "grafana.ukhas.net",
+        "aliases": [],
         "nginx_conf": "salt://ukhasnet/nginx/grafana.conf",
         "ssl": {"certificate": "grafana.ukhas.net"},
       },
