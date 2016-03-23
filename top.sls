@@ -40,3 +40,6 @@ base:
 
     predictor-hackathon.vm.habhub.org:
       - http/test/hackathon
+
+    ukhasnet.vm.habhub.org:
+      - ukhasnet

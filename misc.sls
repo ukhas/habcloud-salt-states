@@ -17,6 +17,7 @@ misc-packages:
           - ltrace
           - gdb
           - rsyslog-relp
+          - apt-transport-https
 
 # Unnecessary daemons listening on 0.0.0.0
 purge-useless-nfs:
