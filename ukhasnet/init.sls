@@ -1,6 +1,5 @@
 include:
   - backups
-  - nginx
   - .influxdb
   - .grafana
   - .ukhasnet_influxdb
