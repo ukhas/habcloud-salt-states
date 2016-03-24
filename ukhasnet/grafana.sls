@@ -23,6 +23,5 @@ grafana:
     - template: jinja
     - show_diff: false
 
-# TODO: Add Grafana database backups
-# {% from "backups/macros.jinja" import backup %}
-# {{ backup("ukhasnet-grafana", "username", "cmd") }}
+{% from "backups/macros.jinja" import backup %}
+{{ backup("ukhasnet-grafana", "grafana", "cat /var/lib/grafana/grafana.db") }}
