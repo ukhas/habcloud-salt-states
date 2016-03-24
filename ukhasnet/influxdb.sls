@@ -1,6 +1,3 @@
-include:
-  - backups
-
 influxdb:
   pkgrepo.managed:
     - name: deb https://repos.influxdata.com/debian wheezy stable
@@ -19,6 +16,25 @@ influxdb:
     - user: root
     - group: root
     - mode: 644
+
+/root/influxdb_setup.txt:
+  file.managed:
+    - source: salt://ukhasnet/influxdb_setup.txt
+    - user: root
+    - group: root
+    - mode: 600
+    - template: jinja
+    - show_diff: false
+
+influxdb-setup:
+  cmd.run:
+    - name: |
+      influx \
+       -username admin \
+       -password "{{ pillar['ukhasnet']['influxdb']['admin_password'] }}" \
+      < /root/influxdb_setup.txt
+    - shell: /bin/sh
+    - output_loglevel: quiet
 
 # TODO: Add InfluxDB backups
 # {% from "backups/macros.jinja" import backup %}

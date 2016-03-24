@@ -1,6 +1,3 @@
-include:
-  - backups
-
 grafana:
   pkgrepo.managed:
     - name: deb https://packagecloud.io/grafana/stable/debian/ wheezy main
