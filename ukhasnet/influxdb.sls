@@ -30,6 +30,14 @@ influxdb:
     - require:
       - service: influxdb
 
-# TODO: Add InfluxDB backups
-# {% from "backups/macros.jinja" import backup %}
-# {{ backup("ukhasnet-influxdb", "username", "cmd") }}
+/root/influxdb_backup.sh:
+  file.managed:
+    - source: salt://ukhasnet/influxdb_backup.sh
+    - user: root
+    - group: root
+    - mode: 700
+    - template: jinja
+    - show_diff: false
+
+{% from "backups/macros.jinja" import backup %}
+{{ backup("ukhasnet-influxdb", "influxdb", "/root/influxdb_backup.sh") }}

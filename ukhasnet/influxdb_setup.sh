@@ -1,4 +1,6 @@
 #!/bin/bash
+set -eu
+
 {% set admin_password = pillar['ukhasnet']['influxdb']['admin_password'] %}
 {% set users = pillar['ukhasnet']['influxdb']['users'] %}
 {% set databases = pillar['ukhasnet']['influxdb']['databases'] %}
