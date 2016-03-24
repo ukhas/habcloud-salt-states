@@ -17,23 +17,18 @@ influxdb:
     - group: root
     - mode: 644
 
-/root/influxdb_setup.txt:
+/root/influxdb_setup.sh:
   file.managed:
-    - source: salt://ukhasnet/influxdb_setup.txt
+    - source: salt://ukhasnet/influxdb_setup.sh
     - user: root
     - group: root
-    - mode: 600
+    - mode: 700
     - template: jinja
     - show_diff: false
 
 influxdb-setup:
   cmd.run:
-    - name: |
-      influx \
-       -username admin \
-       -password "{{ pillar['ukhasnet']['influxdb']['admin_password'] }}" \
-      < /root/influxdb_setup.txt
-    - shell: /bin/sh
+    - name: /root/influxdb_setup.sh
     - output_loglevel: quiet
 
 # TODO: Add InfluxDB backups
