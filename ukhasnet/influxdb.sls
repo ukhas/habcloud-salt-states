@@ -10,9 +10,15 @@ influxdb:
   service.running:
     - reload: true
     - enable: true
+    - watch:
+      - file: /etc/influxdb/influxdb.conf
 
-# TODO: Ship a config file that restricts ports to localhost only and sets
-# admin password perhaps, add to service watch list
+/etc/influxdb/influxdb.conf:
+  file.managed:
+    - source: salt://ukhasnet/influxdb.conf
+    - user: root
+    - group: root
+    - mode: 644
 
 # TODO: Add InfluxDB backups
 # {% from "backups/macros.jinja" import backup %}

@@ -11,9 +11,17 @@ grafana:
     - name: grafana-server
     - reload: true
     - enable: true
+    - watch:
+      - file: /etc/grafana/grafana.ini
 
-# TODO: Ship a config file that restricts ports to localhsot only,
-# sets an admin username and password, maybe other things, add to watch list
+/etc/grafana/grafana.ini:
+  file.managed:
+    - source: salt://ukhasnet/grafana.ini
+    - user: root
+    - group: grafana
+    - mode: 640
+    - template: jinja
+    - show_diff: false
 
 # TODO: Add Grafana database backups
 # {% from "backups/macros.jinja" import backup %}
