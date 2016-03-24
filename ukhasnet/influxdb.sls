@@ -25,10 +25,7 @@ influxdb:
     - mode: 700
     - template: jinja
     - show_diff: false
-
-influxdb-setup:
   cmd.run:
-    - name: /root/influxdb_setup.sh
     - output_loglevel: quiet
 
 # TODO: Add InfluxDB backups

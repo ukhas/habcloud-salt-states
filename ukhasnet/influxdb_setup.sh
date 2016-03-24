@@ -18,7 +18,7 @@ influxdb -username admin -password {{ admin_password }} \
 influxdb -username admin -password {{ admin_password }} \
     -execute "CREATE USER {{ user }} WITH PASSWORD '{{ data.password }}'"
 
-{% for database, level in data.grants %}
+{% for database, level in data.grants.items() %}
 influxdb -username admin -password {{ admin_password }} \
     -execute "GRANT {{ level }} ON {{ database }} TO {{ user }}"
 {% endfor %}
