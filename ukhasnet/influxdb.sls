@@ -27,6 +27,8 @@ influxdb:
     - show_diff: false
   cmd.run:
     - output_loglevel: quiet
+    - require:
+      - service: influxdb
 
 # TODO: Add InfluxDB backups
 # {% from "backups/macros.jinja" import backup %}
