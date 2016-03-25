@@ -2,6 +2,9 @@ include:
   - rust
   - supervisor
 
+libssl-dev:
+  pkg.installed: []
+
 ukhasnet-influxdb:
   group.present: []
   user.present:
@@ -21,6 +24,8 @@ ukhasnet-influxdb:
     - watch:
       - git: ukhasnet-influxdb
       - cmd: install-rust
+    - require:
+      - pkg: libssl-dev
   supervisord.running:
     - restart: true
     - watch:
