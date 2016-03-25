@@ -5,6 +5,7 @@ misc-packages:
           - vim
           - htop
           - rsync
+          - curl
           - iotop
           - iftop
           - netcat-openbsd
