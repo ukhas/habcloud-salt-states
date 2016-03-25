@@ -29,8 +29,8 @@ base:
     salt.vm.habhub.org:
       - saltbot
 
-#    adamscratch.vm.habhub.org:
-#      - adamscratch
+    adamscratch.vm.habhub.org:
+      - adamscratch
 
     ukhas.vm.habhub.org:
       - ukhas
