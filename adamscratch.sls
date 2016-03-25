@@ -1,5 +1,6 @@
 include:
   - postgres.9_1
+  - rust
 
 adams_group:
   postgres_group.present:
