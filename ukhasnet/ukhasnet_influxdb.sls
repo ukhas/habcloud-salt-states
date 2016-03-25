@@ -25,7 +25,7 @@ ukhasnet-influxdb:
     - restart: true
     - watch:
       - file: /etc/supervisor/conf.d/ukhasnet-influxdb.conf
-      - file: /home/ukhasnet_influxdb/config.toml
+      - file: /home/ukhasnet-influxdb/config.toml
       - cmd: ukhasnet-influxdb
 
 /etc/supervisor/conf.d/ukhasnet-influxdb.conf:
@@ -38,3 +38,7 @@ ukhasnet-influxdb:
   file.managed:
     - source: salt://ukhasnet/ukhasnet_influxdb_config.toml
     - template: jinja
+    - user: ukhasnet-influxdb
+    - group: ukhasnet-influxdb
+    - mode: 600
+    - show_diff: false

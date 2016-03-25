@@ -25,10 +25,12 @@ influxdb:
     - mode: 700
     - template: jinja
     - show_diff: false
-  cmd.run:
+  cmd.wait:
     - output_loglevel: quiet
     - require:
       - service: influxdb
+    - watch:
+      - file: /root/influxdb_setup.sh
 
 /root/influxdb_backup.sh:
   file.managed:
