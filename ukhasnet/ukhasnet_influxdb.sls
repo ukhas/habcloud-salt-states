@@ -20,11 +20,12 @@ ukhasnet-influxdb:
     - cwd: /home/ukhasnet-influxdb/ukhasnet-influxdb
     - watch:
       - git: ukhasnet-influxdb
+      - cmd: install-rust
   supervisord.running:
     - restart: true
     - watch:
       - file: /etc/supervisor/conf.d/ukhasnet-influxdb.conf
-      - file: /home/ukhasnet_influxdb/ukhasnet_influxdb_config.toml
+      - file: /home/ukhasnet_influxdb/config.toml
       - cmd: ukhasnet-influxdb
 
 /etc/supervisor/conf.d/ukhasnet-influxdb.conf:
