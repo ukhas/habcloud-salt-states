@@ -47,3 +47,16 @@ ukhasnet-influxdb:
     - group: ukhasnet-influxdb
     - mode: 600
     - show_diff: false
+
+/home/ukhasnet-influxdb/influxdb_backup.sh:
+  file.managed:
+    - source: salt://ukhasnet/influxdb_backup.sh
+    - user: influxdb
+    - group: influxdb
+    - mode: 700
+    - template: jinja
+    - show_diff: false
+
+{% from "backups/macros.jinja" import backup %}
+{{ backup("ukhasnet-influxdb", "ukhasnet-influxdb",
+          "/home/ukhasnet-influxdb/influxdb_backup.sh") }}
