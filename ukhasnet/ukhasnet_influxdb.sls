@@ -19,7 +19,7 @@ ukhasnet-influxdb:
     - user: ukhasnet-influxdb
     - always_fetch: true
   cmd.wait:
-    - name: cargo build --release
+    - name: /usr/local/bin/cargo build --release
     - cwd: /home/ukhasnet-influxdb/ukhasnet-influxdb
     - watch:
       - git: ukhasnet-influxdb
