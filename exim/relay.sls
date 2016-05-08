@@ -16,7 +16,7 @@ include:
 
 exim4-dkim:
     cmd.run:
-      - name: openssl genrsa -out /etc/exim4/dkim.key 2048
+      - name: openssl genrsa -out /etc/exim4/dkim.key 1024
       - umask: 027
       - group: Debian-exim
       - creates: /etc/exim4/dkim.key
