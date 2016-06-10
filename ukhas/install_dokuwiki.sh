@@ -12,9 +12,9 @@ wget -qO /tmp/dokuwiki/recaptcha.tgz https://github.com/liip/dw-plugin-recaptcha
 mkdir /srv/ukhas-dokuwiki/lib/plugins/recaptcha
 $TAR -xf /tmp/dokuwiki/recaptcha.tgz -C /srv/ukhas-dokuwiki/lib/plugins/recaptcha --strip-components=1
 
-# wget -qO /tmp/dokuwiki/paypal15.tgz  https://github.com/ukhas/dokuwiki-paypal15/archive/master.tar.gz
-# mkdir /srv/ukhas-dokuwiki/lib/plugins/paypal15
-# $TAR -xf /tmp/dokuwiki/paypal15.tgz  -C /srv/ukhas-dokuwiki/lib/plugins/paypal15 --strip-components=1
+wget -qO /tmp/dokuwiki/paypal16.tgz  https://github.com/ukhas/dokuwiki-paypal15/archive/master.tar.gz
+mkdir /srv/ukhas-dokuwiki/lib/plugins/paypal16
+$TAR -xf /tmp/dokuwiki/paypal16.tgz  -C /srv/ukhas-dokuwiki/lib/plugins/paypal16 --strip-components=1
 
 rm -rf /tmp/dokuwiki
 
