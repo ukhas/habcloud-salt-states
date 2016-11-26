@@ -1,0 +1,29 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          tawhiri-api-run-dir
+# Required-Start:    $local_fs $remote_fs $network
+# Required-Stop:     $local_fs $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Create /run/tawhiri-api
+### END INIT INFO
+
+# Source function library
+. /lib/lsb/init-functions
+
+case "$1" in
+    start)
+        test -d /run/tawhiri-api || mkdir /run/tawhiri-api
+        chown tawhiri:www-data /run/tawhiri-api
+        chmod 750 /run/tawhiri-api
+        ;;
+    stop|reload|status|restart|force-reload)
+        ;;
+    *)
+        log_success_msg "Usage: $0 {start|stop|restart|force-reload}"
+        exit 1
+        ;;
+esac
+
+exit 0
