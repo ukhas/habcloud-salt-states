@@ -29,6 +29,9 @@ tawhiri-installed:
       - file: /srv/tawhiri
       - user: tawhiri
 
+imagemagick:
+  pkg.installed: []
+
 ruaumoko-dataset:
   cmd.script:
     - name: /srv/tawhiri/bin/ruaumoko-download
@@ -36,3 +39,4 @@ ruaumoko-dataset:
     - user: tawhiri
     - require:
       - cmd: tawhiri-installed
+      - pkg: imagemagick
