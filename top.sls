@@ -36,7 +36,7 @@ base:
 #      - monitoring
 
     predictor.vm.habhub.org:
-      - tawhiri.downloader
+      - tawhiri
 
     predictor-hackathon.vm.habhub.org:
       - http/test/hackathon
