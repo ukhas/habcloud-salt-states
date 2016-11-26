@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -o errexit -o pipefail -o nounset
 set -x
 apt-get install \
