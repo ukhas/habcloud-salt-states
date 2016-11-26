@@ -34,9 +34,8 @@ imagemagick:
 
 ruaumoko-dataset:
   cmd.script:
-    - name: /srv/tawhiri/bin/ruaumoko-download
+    - name: "salt://tawhiri/download-ruaumoko-dataset.sh"
     - creates: /srv/ruaumoko-dataset
-    - user: tawhiri
     - require:
       - cmd: tawhiri-installed
       - pkg: imagemagick
