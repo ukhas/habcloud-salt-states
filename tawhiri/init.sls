@@ -18,5 +18,10 @@ tawhiri:
     - user: tawhiri
     - require:
       - cmd: python3-installed
-    - pip_pkgs:
-      - Tawhiri==0.2.0
+
+tawhiri-pkg:
+    pip.installed:
+      - name: Tawhiri==0.2.0
+      - user: tawhiri
+      - require: 
+         - virtualenv:/srv/tawhiri
