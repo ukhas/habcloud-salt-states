@@ -12,16 +12,14 @@ tawhiri:
       - gid_from_name: true
 
 /srv/tawhiri:
-    file.directory:
-      - dir_mode: 775
-      - group: tawhiri
-      - require:
-          - group: tawhiri
-
-tawhiri-python:
-    git.latest:
-     - name: https://github.com/cuspaceflight/tawhiri
-     - target: /srv/tawhiri
-     - user: tawhiri
-     - require:
-         - file: /srv/tawhiri
+  virtualenv.managed:
+    - distribute: true
+    - python: /usr/local/bin/python3
+    - user: tawhiri
+    - require:
+      - git: saltbot-code
+      - cmd: python3-installed
+    - watch:
+      - git: saltbot-code
+    - pip_pkgs:
+      - Tawhiri==0.2.0
