@@ -24,4 +24,4 @@ tawhiri-pkg:
       - name: Tawhiri==0.2.0
       - user: tawhiri
       - require: 
-         - virtualenv:/srv/tawhiri
+         - virtualenv: /srv/tawhiri
