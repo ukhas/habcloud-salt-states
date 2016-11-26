@@ -5,7 +5,7 @@
 
 python3-installed:
   cmd.script:
-    - name: salt://python/install-python3.5.sh:
+    - name: "salt://python/install-python3.5.sh"
     - creates: /usr/local/src/Python-3.5.2/.installed-stamp
     - require:
       - file: /usr/local/src/Python-3.5.2.tgz
