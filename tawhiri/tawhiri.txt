@@ -1,2 +1,0 @@
-Ruaumoko==0.2.0
-Tawhiri==0.2.0

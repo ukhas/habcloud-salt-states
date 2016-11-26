@@ -2,5 +2,5 @@
 set -o errexit -o pipefail -o nounset
 set -x
 
-virtualenv /srv/tawhiri
-/srv/tawhiri/bin/pip install Tawhiri==0.2.0
+pyvenv3 /srv/tawhiri
+/srv/tawhiri/bin/pip3 install Ruaumoko==0.2.0 Tawhiri==0.2.0
