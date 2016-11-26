@@ -17,11 +17,14 @@ tawhiri:
     - group: tawhiri
     - require:
       - group: tawhiri
-  virtualenv.managed:
-    - requirements: salt://tawhiri/tawhiri.txt
-    - python: /usr/local/bin/python3
+
+# This is a bash script for no good reason. I couldn't get the virtualenv
+# salt state module to work. 
+tawhiri-installed:
+  cmd.script:
+    - name: "salt://tawhiri/install-tawhiri.sh"
+    - creates: /srv/tawhiri/.installed-stamp
     - user: tawhiri
     - require:
-      - cmd: python3-installed
-      - user: tawhiri
       - file: /srv/tawhiri
+      - user: tawhiri
