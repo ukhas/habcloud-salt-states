@@ -19,17 +19,10 @@ tawhiri:
       - group: tawhiri
   virtualenv.managed:
     - distribute: true
+    - requirements: salt://tawhiri/tawhiri.txt
     - python: /usr/local/bin/python3
     - user: tawhiri
     - require:
       - cmd: python3-installed
       - user: tawhiri
       - file: /srv/tawhiri
-
-tawhiri-pkg:
-    pip.installed:
-      - name: Tawhiri==0.2.0
-      - user: tawhiri
-      - bin_env: /srv/tawhiri
-      - require: 
-         - virtualenv: /srv/tawhiri
