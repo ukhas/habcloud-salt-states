@@ -28,3 +28,11 @@ tawhiri-installed:
     - require:
       - file: /srv/tawhiri
       - user: tawhiri
+
+ruaumoko-dataset:
+  cmd.script:
+    - name: /srv/tawhiri/bin/ruaumoko-download
+    - creates: /srv/ruaumoko-dataset
+    - user: tawhiri
+    - require:
+      - cmd: tawhiri-installed
