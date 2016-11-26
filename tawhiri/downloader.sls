@@ -8,7 +8,7 @@ tawhiri-downloader:
 
 /srv/tawhiri-datasets:
     file.directory:
-      - dir_mode: 755
+      - dir_mode: 775
       - group: tawhiri-downloader
       - require:
           - group: tawhiri-downloader
