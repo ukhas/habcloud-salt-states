@@ -18,7 +18,6 @@ tawhiri:
     - require:
       - group: tawhiri
   virtualenv.managed:
-    - distribute: true
     - requirements: salt://tawhiri/tawhiri.txt
     - python: /usr/local/bin/python3
     - user: tawhiri
