@@ -19,6 +19,7 @@ misc-packages:
           - gdb
           - rsyslog-relp
           - apt-transport-https
+          - parted
 
 # Unnecessary daemons listening on 0.0.0.0
 purge-useless-nfs:
