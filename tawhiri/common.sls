@@ -13,6 +13,14 @@ tawhiri:
   postgres_database.present:
     - owner: postgres
 
+create-predictions-table:
+  cmd.script:
+    - name: "salt://tawhiri/create-predictions-table.sh"
+    - creates: /srv/tawhiri/.created-predictions-table
+    - require:
+      - postgres_database: tawhiri
+      - postgres_user: tawhiri
+
 /srv/tawhiri:
   file.directory:
     - dir_mode: 775
