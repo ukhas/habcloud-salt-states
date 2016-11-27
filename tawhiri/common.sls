@@ -43,3 +43,18 @@ ruaumoko-dataset:
     - require:
       - cmd: ruaumoko-installed
       - pkg: imagemagick
+
+tawhiri-downloader:
+    group.present: []
+    user.present:
+      - home: /srv/tawhiri-downloader
+      - createhome: false
+      - system: true
+      - gid_from_name: true
+
+/srv/tawhiri-datasets:
+    file.directory:
+      - dir_mode: 775 
+      - group: tawhiri-downloader
+      - require:
+          - group: tawhiri-downloader
