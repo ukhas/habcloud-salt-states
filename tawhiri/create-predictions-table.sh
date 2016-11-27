@@ -5,9 +5,9 @@ set -x
 sudo -Hu postgres psql -e -v ON_ERROR_STOP=1 tawhiri <<EOF
 CREATE TABLE predictions (
     prediction_id SERIAL PRIMARY KEY,
-    launch_latitude double NOT NULL,
-    launch_longitude double NOT NULL,
-    launch_altitude double NOT NULL,
+    launch_latitude real NOT NULL,
+    launch_longitude real NOT NULL,
+    launch_altitude real NOT NULL,
     launch_datetime timestamp with time zone NOT NULL
 );
 
