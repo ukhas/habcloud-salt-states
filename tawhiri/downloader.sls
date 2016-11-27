@@ -28,8 +28,6 @@ libgrib-api-1.9.16:
 /etc/supervisor/conf.d/tawhiri-downloader.conf:
   file.managed:
     - source: salt://tawhiri/downloader.supervisor.conf
-    - watch_in:
-      - service: supervisor
     - require:
       - file: /usr/local/bin/tawhiri-downloader
       - file: /srv/tawhiri-datasets
@@ -37,6 +35,9 @@ libgrib-api-1.9.16:
 supervisor-tawhiri-downloader:
   supervisord.running:
     - name: tawhiri-downloader
+    - update: true
     - watch:
       - file: /etc/supervisor/conf.d/tawhiri-downloader.conf
       - file: /usr/local/bin/tawhiri-downloader
+    - require:
+      - file: /etc/supervisor/conf.d/tawhiri-downloader.conf

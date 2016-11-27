@@ -31,6 +31,8 @@ tawhiri-installed:
       - user: tawhiri
       - cmd: cython-installed
       - git: tawhiri-code
+    - watch:
+      - cmd: tawhiri-code
 
 {% from "http/macros.jinja" import http %}
 
