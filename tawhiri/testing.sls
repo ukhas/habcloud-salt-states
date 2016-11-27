@@ -15,8 +15,8 @@ tawhiri-code:
 
 cython-installed:
   cmd.run:
-    - name: "/srv/cython/bin/pip3 install Cython"
-    - creates: /srv/cython/.cython-installed-stamp
+    - name: "/srv/tawhiri/bin/pip3 install Cython"
+    - creates: /srv/tawhiri/.cython-installed-stamp
     - user: tawhiri
     - require:
       - file: /srv/tawhiri
@@ -32,7 +32,7 @@ tawhiri-installed:
       - cmd: cython-installed
       - git: tawhiri-code
     - watch:
-      - cmd: tawhiri-code
+      - git: tawhiri-code
 
 {% from "http/macros.jinja" import http %}
 
