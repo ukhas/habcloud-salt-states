@@ -1,4 +1,4 @@
-include
+include:
   - supervisor
  
 gunicorn-installed:
