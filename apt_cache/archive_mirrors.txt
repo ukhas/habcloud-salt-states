@@ -1,0 +1,9 @@
+.debian.org
+debian.saltstack.com
+nginx.org
+apt.postgresql.org
+debian.adiscon.com
+packages.elasticsearch.org
+repos.influxdata.com
+packagecloud.io
+packagecloud-repositories.s3.dualstack.us-west-1.amazonaws.com
