@@ -25,6 +25,7 @@ cython-installed:
 tawhiri-installed:
   cmd.run:
     - name: "/srv/tawhiri/bin/python3 /srv/tawhiri/src/setup.py develop"
+    - cwd: /srv/tawhiri/src
     - creates: /srv/tawhiri/.develop-setup-stamp
     - user: tawhiri
     - require:
