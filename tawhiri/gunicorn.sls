@@ -1,6 +1,6 @@
 include:
   - supervisor
- 
+
 gunicorn-installed:
   cmd.run:
     - name: "/srv/tawhiri/bin/pip3 install gunicorn"

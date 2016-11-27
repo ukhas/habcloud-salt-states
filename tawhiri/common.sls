@@ -1,13 +1,17 @@
 include:
   - python
+  - postgres.9_1
 
 tawhiri:
-    group.present: []
-    user.present:
-      - home: /srv/tawhiri
-      - createhome: false
-      - system: true
-      - gid_from_name: true
+  group.present: []
+  user.present:
+    - home: /srv/tawhiri
+    - createhome: false
+    - system: true
+    - gid_from_name: true
+  postgres_user.present: []
+  postgres_database.present:
+    - owner: postgres
 
 /srv/tawhiri:
   file.directory:
@@ -20,7 +24,7 @@ tawhiri-venv:
   cmd.run:
     - name: "pyvenv-3.5 /srv/tawhiri"
     - user: tawhiri
-    - creates: /srv/tawhiri/.pyvenv-setup-stamp
+    - creates: /srv/tawhiri/bin/python3
     - require:
       - user: tawhiri
       - file: /srv/tawhiri
