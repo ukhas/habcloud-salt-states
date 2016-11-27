@@ -36,11 +36,10 @@ base:
 #      - monitoring
 
     predictor.vm.habhub.org:
-      - tawhiri
+      - tawhiri.production
 
     predictor-hackathon.vm.habhub.org:
-      - http/test/hackathon
-      - python
+      - tawhiri.testing
 
     ukhasnet.vm.habhub.org:
       - ukhasnet
