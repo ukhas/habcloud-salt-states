@@ -1,4 +1,4 @@
-include
+include:
   - .common
   - .gunicorn
 
@@ -39,6 +39,7 @@ tawhiri-installed:
     sites = { 
         "predictor-hackathon": {
             "hostname": "predictor-hackathon.vm.habhub.org",
+            "aliases": [],
             "nginx_conf": "salt://tawhiri/nginx-site.conf",
         }   
     },  
