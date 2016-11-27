@@ -1,6 +1,6 @@
 grafana:
   pkgrepo.managed:
-    - name: deb https://packagecloud.io/grafana/testing/debian/ wheezy main
+    - name: deb https://packagecloud.io/grafana/testing/debian/ jessie main
     - file: /etc/apt/sources.list.d/grafana.list
     - key_url: https://packagecloud.io/gpg.key
   pkg.installed: []
