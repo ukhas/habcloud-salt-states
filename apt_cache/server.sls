@@ -10,6 +10,13 @@ squid3:
       - require:
           - pkg: squid3
 
+/etc/squid3/archive_mirrors.txt:
+  file.managed:
+    - source: salt://apt_cache/archive_mirrors.txt
+    - mode: 644
+    - user: root
+    - group: root
+
 /etc/squid3/squid.conf:
     file.managed:
       - source: salt://apt_cache/squid.conf
@@ -18,6 +25,7 @@ squid3:
       - group: root
       - require:
           - pkg: squid3
+          - file: /etc/squid3/archive_mirrors.txt
 
 extend:
     /etc/apt/apt.conf.d/10proxy:
