@@ -16,7 +16,7 @@ tawhiri-code:
 cython-installed:
   cmd.run:
     - name: "/srv/tawhiri/bin/pip3 install Cython"
-    - creates: /srv/tawhiri/.cython-installed-stamp
+    - creates: /srv/tawhiri/bin/cython
     - user: tawhiri
     - require:
       - file: /srv/tawhiri
@@ -26,7 +26,7 @@ tawhiri-installed:
   cmd.run:
     - name: "/srv/tawhiri/bin/python3 /srv/tawhiri/src/setup.py develop"
     - cwd: /srv/tawhiri/src
-    - creates: /srv/tawhiri/.develop-setup-stamp
+    - creates: /srv/tawhiri/lib/python3.5/site-packages/Tawhiri.egg-link
     - user: tawhiri
     - require:
       - user: tawhiri

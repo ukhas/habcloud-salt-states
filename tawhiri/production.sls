@@ -6,7 +6,7 @@ include:
 tawhiri-installed:
   cmd.run:
     - name: "/srv/tawhiri/bin/pip3 install Tawhiri==0.2.0"
-    - creates: /srv/tawhiri/.tawhiri-installed-stamp
+    - creates: /srv/tawhiri/lib/python3.5/site-packages/tawhiri/
     - user: tawhiri
     - require:
       - file: /srv/tawhiri

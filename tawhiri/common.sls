@@ -36,7 +36,7 @@ ruaumoko-installed:
   cmd.run:
     - name: "/srv/tawhiri/bin/pip3 install Ruaumoko==0.2.0"
     - user: tawhiri
-    - creates: /srv/tawhiri/.ruaumoko-installed
+    - creates: /srv/tawhiri/bin/ruaumoko-download
     - require:
       - cmd: tawhiri-venv
 

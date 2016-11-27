@@ -5,7 +5,7 @@ gunicorn-installed:
   cmd.run:
     - name: "/srv/tawhiri/bin/pip3 install gunicorn"
     - user: tawhiri
-    - creates: /srv/tawhiri/.gunicorn-installed
+    - creates: /srv/tawhiri/bin/gunicorn
     - require:
       - cmd: tawhiri-venv
 
