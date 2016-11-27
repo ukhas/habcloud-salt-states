@@ -20,4 +20,11 @@ postgresql:
       - pkgrepo: postgresql_repo
       {% endif %}
 
+postgres-user-daniel:
+  postgres_user.present:
+    - name: daniel
+
+postgres-user-adam:
+  postgres_user.present:
+    - name: adam
 {% endmacro %}
