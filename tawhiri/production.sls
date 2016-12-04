@@ -25,7 +25,7 @@ tawhiri-installed:
     },  
     varnish = { 
         "http": true,
-        "vcl": "salt://http/varnish/default.vcl",
+        "vcl": "salt://tawhiri/varnish.vcl",
         "memory": "1G"
     },  
     http_10_host="predictor"
