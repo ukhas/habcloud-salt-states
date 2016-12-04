@@ -59,7 +59,7 @@ ruaumoko-dataset:
 tawhiri-downloader:
     group.present: []
     user.present:
-      - home: /srv/tawhiri-downloader
+      - home: /srv/tawhiri-datasets
       - createhome: false
       - system: true
       - gid_from_name: true
