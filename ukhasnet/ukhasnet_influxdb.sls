@@ -51,8 +51,8 @@ ukhasnet-influxdb:
 /home/ukhasnet-influxdb/influxdb_backup.sh:
   file.managed:
     - source: salt://ukhasnet/influxdb_backup.sh
-    - user: influxdb
-    - group: influxdb
+    - user: influxdb-ukhasnet
+    - group: influxdb-ukhasnet
     - mode: 700
     - template: jinja
     - show_diff: false
