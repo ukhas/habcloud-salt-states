@@ -16,10 +16,6 @@ base:
       - match: compound
       - exim.satellite
 
-    '* and not monitoring.vm.habhub.org':
-      - match: compound
-      - monitoring.client
-
     habhub.vm.habhub.org:
       - habhub
 
@@ -31,9 +27,6 @@ base:
 
     ukhas.vm.habhub.org:
       - ukhas
-
-#    monitoring.vm.habhub.org:
-#      - monitoring
 
     predictor.vm.habhub.org:
       - tawhiri.production
