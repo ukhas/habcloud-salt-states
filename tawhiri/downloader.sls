@@ -6,8 +6,8 @@ libgrib-api-1.9.16:
 
 /usr/local/bin/tawhiri-downloader:
     file.managed:
-      - source: https://github.com/cuspaceflight/tawhiri-downloader/releases/download/v1.0/tawhiri-downloader-v1.0-debian-wheezy
-      - source_hash: sha256=ea58ca559168d30bddc506f8c2dbe6b50dbf68155ce5d75b443ad6514e97c0dd
+      - source: https://github.com/cuspaceflight/tawhiri-downloader/releases/download/v2.0/tawhiri-downloader-debian-wheezy
+      - source_hash: sha256=a9da912e31d5cf4c285483001ac3499583579fd9a889b802ececdb95ccd54a80
       - mode: 755
 
 /etc/supervisor/conf.d/tawhiri-downloader.conf:
