@@ -31,5 +31,6 @@ base:
     predictor-hackathon.vm.habhub.org:
       - tawhiri.testing
 
-    ukhasnet.vm.habhub.org:
-      - ukhasnet
+#   ukhasnet salt states are all kinds of broken and the vm has massively diverged. Don't touch it.
+#   ukhasnet.vm.habhub.org:
+#     - ukhasnet
