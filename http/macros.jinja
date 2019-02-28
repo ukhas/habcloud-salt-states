@@ -1,21 +1,3 @@
-{% macro ship_ssl_certificate(name) %}
-/etc/ssl/private/{{ name }}.crt:
-  file.managed:
-    - show_diff: false
-    - mode: 600
-    - contents_pillar: ssl:{{ name|replace('.', '_') }}:cert
-    - watch_in:
-      - service: nginx
-
-/etc/ssl/private/{{ name }}.key:
-  file.managed:
-    - show_diff: false
-    - mode: 600
-    - contents_pillar: ssl:{{ name|replace('.', '_') }}:key
-    - watch_in:
-      - service: nginx
-{% endmacro %}
-
 {#
     sites :
         dictionary mapping string to
@@ -434,18 +416,5 @@
             {% endif %}
 {% endif %}
 {% endfor %} {# for _ in sites #}
-
-{# XXX: This is really really nasty. There should be a better way... #}
-{% if ssl %}
-{{ ship_ssl_certificate(ssl.default_certificate) }}
-{% set shipped_ssl_certs = [ssl.default_certificate] %}
-
-{% for site in sites.values() %}
-{% if site.ssl and site.ssl.certificate not in shipped_ssl_certs %}
-{{ ship_ssl_certificate(site.ssl.certificate) }}
-{% set shipped_ssl_certs = shipped_ssl_certs + [site.ssl.certificate] %}
-{% endif %}
-{% endfor %}
-{% endif %}
 
 {% endmacro %}
