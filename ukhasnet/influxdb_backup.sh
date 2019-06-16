@@ -11,6 +11,6 @@ chmod 700 /tmp/influx-backups
 influxd backup -database {{ database }} /tmp/influx-backups
 {% endfor %}
 
-tar cf - /tmp/influx-backups
+tar cf - -C / tmp/influx-backups
 
 rm -rf /tmp/influx-backups
