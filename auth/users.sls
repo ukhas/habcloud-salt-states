@@ -77,6 +77,16 @@ root:
     user.present:
       - password: "!"
 
+    file.managed:
+      - name: /root/.ssh/authorized_keys
+      - mode: 600
+      - user: root
+      - group: root
+      - contents_pillar: auth:root_ssh_keys
+      - makedirs: true
+      - dir_mode: 700
+      - show_diff: false
+
 sudo:
     pkg:
       - installed
